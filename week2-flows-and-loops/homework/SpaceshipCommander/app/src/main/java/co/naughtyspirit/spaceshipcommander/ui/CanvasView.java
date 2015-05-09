@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CanvasView extends View {
 
-    private final List<Drawable> drawables = new ArrayList<>();
+    private final List<CanvasDrawable> drawables = new ArrayList<>();
     private int cellWidth;
     private int cellHeight;
 
@@ -26,15 +26,15 @@ public class CanvasView extends View {
         super(context, attrs);
     }
 
-    public void addDrawable(Drawable drawable) {
-        drawables.add(drawable);
+    public void addDrawable(CanvasDrawable canvasDrawable) {
+        drawables.add(canvasDrawable);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (Drawable drawable : drawables) {
-            drawable.onDraw(canvas, cellWidth, cellHeight);
+        for (CanvasDrawable canvasDrawable : drawables) {
+            canvasDrawable.onDraw(canvas, cellWidth, cellHeight);
         }
     }
 

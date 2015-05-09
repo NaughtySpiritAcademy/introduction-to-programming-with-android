@@ -19,9 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import co.naughtyspirit.spaceshipcommander.entities.BlackHole;
 import co.naughtyspirit.spaceshipcommander.entities.Board;
 import co.naughtyspirit.spaceshipcommander.entities.GameEntity;
-import co.naughtyspirit.spaceshipcommander.entities.Obstacle;
 import co.naughtyspirit.spaceshipcommander.entities.Planet;
 import co.naughtyspirit.spaceshipcommander.entities.Ship;
 import co.naughtyspirit.spaceshipcommander.entities.ShipCollisionListener;
@@ -86,8 +86,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         int width = size.x;
         int height = size.y;
 
-        rows = 3;
-        columns = 3;
+        rows = 7;
+        columns = 4;
         int cellWidth = width / columns;
         int cellHeight = height / rows;
         canvasView.setCellWidth(cellWidth);
@@ -95,14 +95,16 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
 
         gameEntities.clear();
         canvasView.clearDrawables();
-        ship = new Ship(1, 1, this);
+        android.graphics.drawable.Drawable background = getResources().getDrawable(R.drawable.background);
+        canvasView.addDrawable(new Board(rows, columns, background));
+        ship = new Ship(1, 1, getResources().getDrawable(R.drawable.ship), this);
         gameEntities.add(ship);
-        gameEntities.add(new Planet(2, 2));
-        gameEntities.add(new Obstacle(2, 3));
+        gameEntities.add(new Planet(2, 2, getResources().getDrawable(R.drawable.planet)));
+        gameEntities.add(new BlackHole(2, 3, getResources().getDrawable(R.drawable.black_hole)));
         for (GameEntity entity : gameEntities) {
             canvasView.addDrawable(entity);
         }
-        canvasView.addDrawable(new Board(rows, columns));
+
         canvasView.invalidate();
     }
 

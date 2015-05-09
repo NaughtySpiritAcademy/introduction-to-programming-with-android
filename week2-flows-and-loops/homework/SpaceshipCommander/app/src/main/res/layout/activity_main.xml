@@ -24,7 +24,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:singleLine="true"
-            android:textColor="@android:color/primary_text_light" />
+            android:textColor="@android:color/primary_text_dark" />
 
         <Button
             android:id="@+id/left_btn"
