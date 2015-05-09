@@ -2,11 +2,15 @@ package com.example.ns.dancingminion;
 
 public class Minion {
     public static float rotate() {
-        return 180f;
+        float circle = 360;
+        float quarterCircle = circle * 3;
+        return quarterCircle;
     }
 
     public static float goToRightBananas(float x) {
-        return 100;
+        float displayWidth = 800;
+        float result = displayWidth - x;
+        return result;
     }
 
     public static float goToBottomRightBanana(float y) {
@@ -22,7 +26,7 @@ public class Minion {
     }
 
     public static float zoomMinionHeight(float scale) {
-        return 1.2f;
+        return 0.8f;
     }
 
     public static String minionAwesomeText(String text) {
