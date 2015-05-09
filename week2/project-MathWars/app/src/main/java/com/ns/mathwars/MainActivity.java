@@ -16,7 +16,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private Button startButton;
 
     private int currentPlayerNumber = 1;
-    private int[] results = new int[PLAYERS_COUNT];
+    private int[] points = new int[PLAYERS_COUNT];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +42,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK) {
-            int answersCount = data.getIntExtra("correctAnswers", 0);
-            results[currentPlayerNumber - 1] = answersCount;
+            int answersCount = data.getIntExtra("points", 0);
+            points[currentPlayerNumber - 1] = answersCount;
         }
 
         if(currentPlayerNumber == PLAYERS_COUNT) {
             Intent resultsIntent = new Intent(this, ResultsActivity.class);
-            resultsIntent.putExtra("results", results);
+            resultsIntent.putExtra("points", points);
             startActivity(resultsIntent);
             finish();
         } else {

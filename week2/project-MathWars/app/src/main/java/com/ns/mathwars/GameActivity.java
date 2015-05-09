@@ -16,6 +16,8 @@ import java.util.Random;
 public class GameActivity extends Activity implements View.OnClickListener {
     private static final int MAX_NUMBER = 50;
     private static final int TIME_MILLISECONDS = 10000;
+    private static final int CORRECT_ANSWER_POINTS = 10;
+    private static final int WRONG_ANSWER_POINTS = - 7;
 
     private TextView playerView;
     private TextView equationView;
@@ -168,16 +170,17 @@ public class GameActivity extends Activity implements View.OnClickListener {
     }
 
     private void finishGame() {
+        final int points = computePoints();
         AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
         builder.setTitle("Game Over");
-        builder.setMessage("Correct answers: " + correctAttempts);
+        builder.setMessage("Total points: " + points);
         builder.setCancelable(false);
         builder.setNeutralButton("OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         Intent data = new Intent();
-                        data.putExtra("correctAnswers", correctAttempts);
+                        data.putExtra("points", points);
                         setResult(Activity.RESULT_OK, data);
                         finish();
                     }
@@ -185,6 +188,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         AlertDialog gameOverDialog = builder.create();
         gameOverDialog.show();
+    }
+
+    private int computePoints() {
+        int wrongAnswers = allAttempts - correctAttempts;
+        return correctAttempts * CORRECT_ANSWER_POINTS + wrongAnswers * WRONG_ANSWER_POINTS;
     }
 
     class Equation {

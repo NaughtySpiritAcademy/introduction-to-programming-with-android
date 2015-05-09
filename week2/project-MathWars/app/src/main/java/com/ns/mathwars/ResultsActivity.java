@@ -15,14 +15,14 @@ public class ResultsActivity extends Activity implements View.OnClickListener{
     private TextView player2ResultView;
     private Button playAgainButton;
 
-    private int[] results;
+    private int[] points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        results = getIntent().getIntArrayExtra("results");
+        points = getIntent().getIntArrayExtra("points");
 
         winnerView = (TextView) findViewById(R.id.winner);
         player1ResultView = (TextView) findViewById(R.id.player1_result);
@@ -36,7 +36,7 @@ public class ResultsActivity extends Activity implements View.OnClickListener{
     }
 
     private void displayWinner() {
-        int winnerNumber = MathWars.whoWins(results[0], results[1]);
+        int winnerNumber = MathWars.whoWins(points[0], points[1]);
         winnerView.setText("Player " + winnerNumber + " wins!");
         if(winnerNumber == 1) {
             player1ResultView.setBackgroundColor(getResources().getColor(R.color.green));
@@ -48,11 +48,11 @@ public class ResultsActivity extends Activity implements View.OnClickListener{
     }
 
     private void displayPlayer1Result() {
-        player1ResultView.setText("Player 1: " + results[0]);
+        player1ResultView.setText("Player 1: " + points[0] + " points");
     }
 
     private void displayPlayer2Result() {
-        player2ResultView.setText("Player 2: " + results[1]);
+        player2ResultView.setText("Player 2: " + points[1] + " points");
     }
 
 
