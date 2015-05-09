@@ -38,6 +38,10 @@ public class CanvasView extends View {
         }
     }
 
+    public void clearDrawables() {
+        drawables.clear();
+    }
+
     public void setCellHeight(int cellHeight) {
         this.cellHeight = cellHeight;
     }

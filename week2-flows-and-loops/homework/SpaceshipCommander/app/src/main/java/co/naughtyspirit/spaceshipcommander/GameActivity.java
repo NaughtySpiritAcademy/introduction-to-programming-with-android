@@ -76,6 +76,12 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         enableImmersiveMode();
         bindViews();
 
+
+        startNewGame();
+    }
+
+    private void startNewGame() {
+
         Point size = getWindowSize();
         int width = size.x;
         int height = size.y;
@@ -86,6 +92,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         int cellHeight = height / rows;
         canvasView.setCellWidth(cellWidth);
         canvasView.setCellHeight(cellHeight);
+
+        gameEntities.clear();
+        canvasView.clearDrawables();
         ship = new Ship(1, 1, this);
         gameEntities.add(ship);
         gameEntities.add(new Planet(2, 2));
@@ -179,8 +188,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         showDialogGameOverDialog(R.string.mission_failed, R.string.into_black_hole, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
-                canvasView.invalidate();
+                resetShipPosition();
             }
         });
     }
@@ -191,7 +199,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         showDialogGameOverDialog(R.string.mission_success, R.string.you_saved_the_day, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
+                startNewGame();
             }
         });
     }
@@ -202,19 +210,25 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         showDialogGameOverDialog(R.string.mission_failed, R.string.epic_fail, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
+                resetShipPosition();
             }
         });
     }
+
 
     private void onAllCommandsExecuted() {
         onGameOver();
         showDialogGameOverDialog(R.string.mission_failed, R.string.almost_there, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
+                resetShipPosition();
             }
         });
+    }
+
+    private void resetShipPosition() {
+        ship.reset();
+        canvasView.invalidate();
     }
 
     private void showDialogGameOverDialog(int title, int message, DialogInterface.OnClickListener okListener) {
