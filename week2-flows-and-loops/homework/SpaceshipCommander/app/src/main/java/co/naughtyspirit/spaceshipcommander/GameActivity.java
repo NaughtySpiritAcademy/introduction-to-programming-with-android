@@ -30,14 +30,14 @@ import co.naughtyspirit.spaceshipcommander.ui.CanvasView;
 
 public class GameActivity extends Activity implements View.OnClickListener, ShipCollisionListener {
 
-    private CanvasView canvasView;
 
     private final Queue<Command> commands = new LinkedList<>();
-    private Ship ship;
     private final Handler commandHandler = new Handler();
     private final List<GameEntity> gameEntities = new ArrayList<>();
     private final List<String> commandTexts = new ArrayList<>();
 
+    private CanvasView canvasView;
+    private Ship ship;
     private int rows;
     private int columns;
     private TextView commandList;
@@ -72,11 +72,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         enableImmersiveMode();
         bindViews();
-
-
         startNewGame();
     }
 
@@ -86,7 +83,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         int width = size.x;
         int height = size.y;
 
-        rows = 7;
+        rows = 5;
         columns = 4;
         int cellWidth = width / columns;
         int cellHeight = height / rows;
@@ -97,7 +94,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         canvasView.clearDrawables();
         android.graphics.drawable.Drawable background = getResources().getDrawable(R.drawable.background);
         canvasView.addDrawable(new Board(rows, columns, background));
-        ship = new Ship(1, 1, getResources().getDrawable(R.drawable.ship), this);
+        ship = new Ship(1, 1, getResources().getDrawable(Commander.getShip(5)), this);
         gameEntities.add(ship);
         gameEntities.add(new Planet(2, 2, getResources().getDrawable(R.drawable.planet)));
         gameEntities.add(new BlackHole(2, 3, getResources().getDrawable(R.drawable.black_hole)));
@@ -120,8 +117,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         for (int buttonId : commandButtons) {
             findViewById(buttonId).setVisibility(View.GONE);
         }
-        Commander commander = new Commander();
-        int[][] commands = commander.getCommands(commandTexts.toArray(new String[commandTexts.size()]));
+        int[][] commands = Commander.getCommands(commandTexts.toArray(new String[commandTexts.size()]));
         for (int[] command : commands) {
             this.commands.add(new Command(command[0], command[1]));
         }
@@ -158,7 +154,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.start_btn) {
-            onStartGame();
+            if (!commandTexts.isEmpty()) {
+                onStartGame();
+            }
         } else if (v.getId() == R.id.reset_btn) {
             onResetCommandList();
         } else {
@@ -220,7 +218,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
 
     private void onAllCommandsExecuted() {
         onGameOver();
-        showDialogGameOverDialog(R.string.mission_failed, R.string.almost_there, new DialogInterface.OnClickListener() {
+        showDialogGameOverDialog(R.string.mission_failed, R.string.try_again, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 resetShipPosition();

@@ -24,9 +24,9 @@ public class Board implements CanvasDrawable {
         this.rows = rows;
         this.columns = columns;
         this.background = background;
-        paint.setStrokeWidth(CELL_STROKE_WIDTH);
+
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.BLUE);
     }
 
     @Override
@@ -34,6 +34,8 @@ public class Board implements CanvasDrawable {
 
         background.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         background.draw(canvas);
+
+        paint.setStrokeWidth(cellHeight / 30);
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {

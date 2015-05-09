@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Spaceship Commander</string>
     <string name="mission_failed">Mission failed</string>
-    <string name="almost_there">Almost there!</string>
+    <string name="try_again">Try again</string>
     <string name="epic_fail">Epic fail</string>
     <string name="you_saved_the_day">You saved the day!</string>
     <string name="mission_success">Mission success</string>

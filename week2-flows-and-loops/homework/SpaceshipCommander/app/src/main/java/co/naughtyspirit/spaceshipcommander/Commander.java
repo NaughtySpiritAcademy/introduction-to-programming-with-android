@@ -5,7 +5,8 @@ package co.naughtyspirit.spaceshipcommander;
  * on 5/9/15.
  */
 public class Commander {
-    public int[][] getCommands(String[] commandTexts) {
+
+    public static int[][] getCommands(String[] commandTexts) {
         int[][] commands = new int[commandTexts.length][];
         for (int i = 0; i < commandTexts.length; i++) {
             String commandText = commandTexts[i];
@@ -26,5 +27,16 @@ public class Commander {
         }
         return commands;
 //        return new int[][]{{1, 1}};
+    }
+
+    public static int getShip(int passengerCount) {
+        if (passengerCount < 10) {
+            return R.drawable.ship_small;
+        } else if (passengerCount < 30) {
+            return R.drawable.ship_medium;
+        } else {
+            return R.drawable.ship_big;
+        }
+//        return R.drawable.ship_small;
     }
 }
