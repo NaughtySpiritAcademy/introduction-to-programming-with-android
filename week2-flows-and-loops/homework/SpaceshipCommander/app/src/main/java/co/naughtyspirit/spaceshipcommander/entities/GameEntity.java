@@ -24,7 +24,8 @@ public abstract class GameEntity implements CanvasDrawable {
         int topPos = (position.row - 1) * cellHeight;
         int cellX = leftPos + cellWidth / 2;
         int cellY = topPos + cellHeight / 2;
-        int cellRadius = cellHeight * 3 / 8;
+        int cellSmallerSize = Math.min(cellWidth, cellHeight);
+        int cellRadius = cellSmallerSize * 3 / 8;
         image.setBounds(cellX - cellRadius, cellY - cellRadius, cellX + cellRadius, cellY + cellRadius);
         image.draw(canvas);
     }

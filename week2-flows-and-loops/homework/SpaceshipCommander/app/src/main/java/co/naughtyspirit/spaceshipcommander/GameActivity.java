@@ -140,7 +140,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
     @Override
     public void onLandingOnPlanet() {
         onGameOver();
-        showDialogGameOverDialog(R.string.mission_success, R.string.you_saved_the_day, new DialogInterface.OnClickListener() {
+        showDialogGameOverDialog(R.string.mission_success, R.string.you_are_awesome, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startNewGame();
