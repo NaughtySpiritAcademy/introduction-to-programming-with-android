@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">Spaceship Commander</string>
     <string name="mission_failed">Mission failed</string>
-    <string name="try_again">Planet not reached</string>
+    <string name="try_again">Home planet not reached</string>
     <string name="hyperdrive_failure">Hyperdrive engines went nuts</string>
     <string name="you_are_awesome">You are awesome!</string>
     <string name="mission_success">Mission success</string>
     <string name="into_black_hole">Into the black hole you go…</string>
     <string name="near_miss">Near miss</string>
+    <string name="gui_up">Up</string>
+    <string name="gui_down">Down</string>
+    <string name="gui_start">Start</string>
+    <string name="gui_reset">Reset</string>
+    <string name="gui_right">Right</string>
+    <string name="gui_left">Left</string>
 </resources>
