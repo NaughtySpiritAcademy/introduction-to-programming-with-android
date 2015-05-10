@@ -10,20 +10,18 @@ import co.naughtyspirit.spaceshipcommander.ui.CanvasDrawable;
  * on 5/9/15.
  */
 public abstract class GameEntity implements CanvasDrawable {
-    protected int row;
-    protected int column;
+    protected Board.Position position;
     private final Drawable image;
 
-    public GameEntity(int row, int column, Drawable image) {
-        this.row = row;
-        this.column = column;
+    public GameEntity(Board.Position position, Drawable image) {
+        this.position = position;
         this.image = image;
     }
 
     @Override
     public void onDraw(Canvas canvas, int cellWidth, int cellHeight) {
-        int leftPos = (column - 1) * cellWidth;
-        int topPos = (row - 1) * cellHeight;
+        int leftPos = (position.column - 1) * cellWidth;
+        int topPos = (position.row - 1) * cellHeight;
         int cellX = leftPos + cellWidth / 2;
         int cellY = topPos + cellHeight / 2;
         int cellRadius = cellHeight * 3 / 8;

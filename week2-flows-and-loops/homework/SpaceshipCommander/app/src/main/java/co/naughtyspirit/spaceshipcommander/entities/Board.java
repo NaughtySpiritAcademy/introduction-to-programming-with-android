@@ -5,7 +5,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import co.naughtyspirit.spaceshipcommander.ui.CanvasDrawable;
+import co.naughtyspirit.spaceshipcommander.ui.CanvasView;
 
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
@@ -13,20 +17,27 @@ import co.naughtyspirit.spaceshipcommander.ui.CanvasDrawable;
  */
 public class Board implements CanvasDrawable {
 
-    public static final int CELL_STROKE_WIDTH = 10;
+    public static final int CELL_STROKE_WIDTH_DIVIDER = 30;
     private final Paint paint = new Paint();
 
-    private final int rows;
-    private final int columns;
     private final Drawable background;
+    private final CanvasView canvasView;
+    private final Size size;
+    private final List<GameEntity> gameEntities = new ArrayList<>();
 
-    public Board(int rows, int columns, Drawable background) {
-        this.rows = rows;
-        this.columns = columns;
+    public Board(int width, int height, Size size, Drawable background, CanvasView canvasView) {
+        this.size = size;
         this.background = background;
-
+        this.canvasView = canvasView;
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLUE);
+        canvasView.clearDrawables();
+        int cellWidth = width / size.columns;
+        int cellHeight = height / size.rows;
+        canvasView.setCellWidth(cellWidth);
+        canvasView.setCellHeight(cellHeight);
+        canvasView.add(this);
+        canvasView.invalidate();
     }
 
     @Override
@@ -35,12 +46,48 @@ public class Board implements CanvasDrawable {
         background.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         background.draw(canvas);
 
-        paint.setStrokeWidth(cellHeight / 30);
+        paint.setStrokeWidth(cellHeight / CELL_STROKE_WIDTH_DIVIDER);
 
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < columns; col++) {
+        for (int row = 0; row < size.rows; row++) {
+            for (int col = 0; col < size.columns; col++) {
                 canvas.drawRect(col * cellWidth, row * cellHeight, col * cellWidth + cellWidth, row * cellHeight + cellHeight, paint);
             }
         }
+    }
+
+    public void add(GameEntity entity) {
+        canvasView.add(entity);
+        gameEntities.add(entity);
+    }
+
+    public void onCommandExecuted(Ship ship) {
+        ship.checkForBoardBounds(size);
+        ship.checkForEntityCollisions(gameEntities);
+        canvasView.invalidate();
+    }
+
+    public void resetLevel(Ship ship) {
+        ship.reset();
+        canvasView.invalidate();
+    }
+
+    public static class Size {
+        public Size(int rows, int columns) {
+            this.rows = rows;
+            this.columns = columns;
+        }
+
+        public final int rows;
+        public final int columns;
+    }
+
+    public static class Position {
+        public Position(int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
+
+        public final int row;
+        public final int column;
     }
 }

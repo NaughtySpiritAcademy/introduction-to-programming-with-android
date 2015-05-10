@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
  */
 public class BlackHole extends GameEntity {
 
-    public BlackHole(int row, int column, Drawable image) {
-        super(row, column, image);
+    public BlackHole(Board.Position position, Drawable image) {
+        super(position, image);
     }
 }

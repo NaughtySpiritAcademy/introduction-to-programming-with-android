@@ -26,7 +26,7 @@ public class CanvasView extends View {
         super(context, attrs);
     }
 
-    public void addDrawable(CanvasDrawable canvasDrawable) {
+    public void add(CanvasDrawable canvasDrawable) {
         drawables.add(canvasDrawable);
     }
 

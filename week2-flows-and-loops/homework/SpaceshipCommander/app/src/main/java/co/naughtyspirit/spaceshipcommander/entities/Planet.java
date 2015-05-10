@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
  */
 public class Planet extends GameEntity {
 
-    public Planet(int row, int column, Drawable image) {
-        super(row, column, image);
+    public Planet(Board.Position position, Drawable image) {
+        super(position, image);
     }
 }
