@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.naughtyspirit.spaceshipcommander.Constants;
 import co.naughtyspirit.spaceshipcommander.ui.CanvasDrawable;
 import co.naughtyspirit.spaceshipcommander.ui.CanvasView;
 
@@ -17,7 +18,6 @@ import co.naughtyspirit.spaceshipcommander.ui.CanvasView;
  */
 public class Board implements CanvasDrawable {
 
-    public static final int CELL_STROKE_WIDTH_DIVIDER = 30;
     private final Paint paint = new Paint();
 
     private final Drawable background;
@@ -46,7 +46,7 @@ public class Board implements CanvasDrawable {
         background.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         background.draw(canvas);
 
-        paint.setStrokeWidth(cellHeight / CELL_STROKE_WIDTH_DIVIDER);
+        paint.setStrokeWidth(cellHeight / Constants.CELL_STROKE_WIDTH_DENOMINATOR);
 
         for (int row = 0; row < size.rows; row++) {
             for (int col = 0; col < size.columns; col++) {

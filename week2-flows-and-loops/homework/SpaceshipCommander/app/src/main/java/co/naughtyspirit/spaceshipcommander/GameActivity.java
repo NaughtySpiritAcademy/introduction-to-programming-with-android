@@ -27,7 +27,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
 
     private Board board;
     private Ship ship;
-    private TextView commandList;
+    private TextView commandListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         for (int buttonId : Constants.GUI_BUTTON_IDS) {
             findViewById(buttonId).setOnClickListener(this);
         }
-        commandList = (TextView) findViewById(R.id.command_list);
+        commandListView = (TextView) findViewById(R.id.command_list);
+        commandListView.setText("");
     }
 
     private void onStartGame() {
@@ -71,9 +72,12 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
 
     private Queue<Command> prepareCommands() {
         Queue<Command> commandQueue = new LinkedList<>();
-        int[][] commands = Commander.getCommands(commandList.getText().toString().split(", "));
-        for (int[] command : commands) {
-            commandQueue.add(new Command(command[0], command[1]));
+        if (commandListView.getText().length() > 0) {
+            String[] commandTexts = commandListView.getText().toString().trim().split(", ");
+            int[][] commands = Commander.getCommands(commandTexts);
+            for (int[] command : commands) {
+                commandQueue.add(new Command(command[0], command[1]));
+            }
         }
         return commandQueue;
     }
@@ -108,10 +112,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         } else if (v.getId() == R.id.reset_btn) {
             onResetCommandList();
         } else {
-            if (commandList.getText().length() != 0) {
-                commandList.append(", ");
+            if (commandListView.getText().length() != 0) {
+                commandListView.append(", ");
             }
-            commandList.append(Constants.BUTTON_IDS_TO_COMMAND.get(v.getId()));
+            commandListView.append(Constants.BUTTON_IDS_TO_COMMAND.get(v.getId()));
         }
     }
 
@@ -120,7 +124,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
     }
 
     private void onGameOver() {
-        commandList.setText("");
+        commandListView.setText("");
         for (int buttonId : Constants.GUI_BUTTON_IDS) {
             findViewById(buttonId).setVisibility(View.VISIBLE);
         }

@@ -9,6 +9,7 @@ import java.util.Map;
  */
 public interface Constants {
     int SHIP_MOVE_TIME = 1000;
+    int CELL_STROKE_WIDTH_DENOMINATOR = 60;
 
     Map<Integer, String> BUTTON_IDS_TO_COMMAND = new HashMap<Integer, String>() {{
         put(R.id.up_btn, Command.Types.Up.name());
@@ -18,4 +19,5 @@ public interface Constants {
     }};
 
     int[] GUI_BUTTON_IDS = {R.id.left_btn, R.id.right_btn, R.id.up_btn, R.id.down_btn, R.id.start_btn, R.id.reset_btn};
+
 }
