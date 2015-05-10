@@ -12,11 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 import co.naughtyspirit.spaceshipcommander.entities.BlackHole;
@@ -29,19 +25,9 @@ import co.naughtyspirit.spaceshipcommander.ui.CanvasView;
 
 public class GameActivity extends Activity implements View.OnClickListener, ShipListener {
 
-    private final List<String> commandTexts = new ArrayList<>();
     private Board board;
     private Ship ship;
     private TextView commandList;
-    private final int[] guiButtons = {R.id.left_btn, R.id.right_btn, R.id.up_btn, R.id.down_btn, R.id.start_btn, R.id.reset_btn};
-
-    Map<Integer, String> buttonToCommandText = new HashMap<Integer, String>() {{
-        put(R.id.up_btn, Command.Types.Up.name());
-        put(R.id.down_btn, Command.Types.Down.name());
-        put(R.id.left_btn, Command.Types.Left.name());
-        put(R.id.right_btn, Command.Types.Right.name());
-    }};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,22 +56,26 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
     }
 
     private void bindViews() {
-        for (int buttonId : guiButtons) {
+        for (int buttonId : Constants.GUI_BUTTON_IDS) {
             findViewById(buttonId).setOnClickListener(this);
         }
         commandList = (TextView) findViewById(R.id.command_list);
     }
 
     private void onStartGame() {
-        for (int buttonId : guiButtons) {
+        for (int buttonId : Constants.GUI_BUTTON_IDS) {
             findViewById(buttonId).setVisibility(View.GONE);
         }
+        ship.executeCommands(prepareCommands());
+    }
+
+    private Queue<Command> prepareCommands() {
         Queue<Command> commandQueue = new LinkedList<>();
-        int[][] commands = Commander.getCommands(commandTexts.toArray(new String[commandTexts.size()]));
+        int[][] commands = Commander.getCommands(commandList.getText().toString().split(", "));
         for (int[] command : commands) {
             commandQueue.add(new Command(command[0], command[1]));
         }
-        ship.executeCommands(commandQueue);
+        return commandQueue;
     }
 
     private Point getWindowSize() {
@@ -121,8 +111,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
             if (commandList.getText().length() != 0) {
                 commandList.append(", ");
             }
-            commandList.append(buttonToCommandText.get(v.getId()));
-            commandTexts.add(buttonToCommandText.get(v.getId()));
+            commandList.append(Constants.BUTTON_IDS_TO_COMMAND.get(v.getId()));
         }
     }
 
@@ -132,8 +121,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
 
     private void onGameOver() {
         commandList.setText("");
-        commandTexts.clear();
-        for (int buttonId : guiButtons) {
+        for (int buttonId : Constants.GUI_BUTTON_IDS) {
             findViewById(buttonId).setVisibility(View.VISIBLE);
         }
     }
