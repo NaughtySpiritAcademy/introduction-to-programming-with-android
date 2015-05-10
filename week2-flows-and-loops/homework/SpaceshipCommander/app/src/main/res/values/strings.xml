@@ -2,7 +2,7 @@
     <string name="app_name">Spaceship Commander</string>
     <string name="mission_failed">Mission failed</string>
     <string name="try_again">Planet not reached</string>
-    <string name="epic_fail">Epic fail</string>
+    <string name="hyperdrive_failure">Hyperdrive engines went nuts</string>
     <string name="you_are_awesome">You are awesome!</string>
     <string name="mission_success">Mission success</string>
     <string name="into_black_hole">Into the black hole you go…</string>

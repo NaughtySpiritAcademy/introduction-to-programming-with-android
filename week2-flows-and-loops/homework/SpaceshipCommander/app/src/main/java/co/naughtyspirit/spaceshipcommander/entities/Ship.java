@@ -28,7 +28,7 @@ public class Ship extends GameEntity {
     }
 
 
-    public void reset() {
+    public void resetPosition() {
         hasCollided = false;
         position = initialPosition;
     }
@@ -48,7 +48,7 @@ public class Ship extends GameEntity {
             if (entity.position.row == position.row && entity.position.column == position.column) {
                 if (entity instanceof BlackHole) {
                     hasCollided = true;
-                    shipListener.onCollisionWithObstacle();
+                    shipListener.onFallingInBlackHole();
                 } else if (entity instanceof Planet && commands.isEmpty()) {
                     hasCollided = true;
                     shipListener.onLandingOnPlanet();
@@ -60,7 +60,7 @@ public class Ship extends GameEntity {
     public void checkForBoardBounds(Board.Size boardSize) {
         if (position.row <= 0 || position.row > boardSize.rows || position.column <= 0 || position.column > boardSize.columns) {
             hasCollided = true;
-            shipListener.onCollisionWithBoard();
+            shipListener.onOutsideOfGalaxy();
         }
     }
 

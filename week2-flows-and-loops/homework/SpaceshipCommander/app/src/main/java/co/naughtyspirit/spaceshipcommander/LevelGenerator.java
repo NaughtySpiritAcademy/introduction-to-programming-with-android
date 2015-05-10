@@ -10,17 +10,11 @@ import co.naughtyspirit.spaceshipcommander.entities.Board;
  */
 public class LevelGenerator {
 
-    private static int BOARD_MIN_ROWS = 3;
-    private static int BOARD_MIN_COLUMNS = 4;
-
-    private static int BOARD_MAX_ROWS = 8;
-    private static int BOARD_MAX_COLUMNS = 10;
-
     private final Random random;
 
     private final Board.Size boardSize;
 
-    private boolean[][] emptyPlaces = new boolean[BOARD_MAX_ROWS + 1][BOARD_MAX_COLUMNS + 1];
+    private boolean[][] emptyPlaces = new boolean[Constants.BOARD_MAX_ROWS + 1][Constants.BOARD_MAX_COLUMNS + 1];
 
     public LevelGenerator() {
         random = new Random();
@@ -37,9 +31,9 @@ public class LevelGenerator {
     }
 
     private Board.Size chooseBoardSize() {
-        int maxRowsToAdd = BOARD_MAX_ROWS - BOARD_MIN_ROWS;
-        int maxColumnsToAdd = BOARD_MAX_COLUMNS - BOARD_MIN_COLUMNS;
-        return new Board.Size(BOARD_MIN_ROWS + random.nextInt(maxRowsToAdd) + 1, BOARD_MIN_COLUMNS + random.nextInt(maxColumnsToAdd) + 1);
+        int maxRowsToAdd = Constants.BOARD_MAX_ROWS - Constants.BOARD_MIN_ROWS;
+        int maxColumnsToAdd = Constants.BOARD_MAX_COLUMNS - Constants.BOARD_MIN_COLUMNS;
+        return new Board.Size(Constants.BOARD_MIN_ROWS + random.nextInt(maxRowsToAdd) + 1, Constants.BOARD_MIN_COLUMNS + random.nextInt(maxColumnsToAdd) + 1);
     }
 
     public Board.Position chooseRandomBoardPosition() {

@@ -20,4 +20,9 @@ public interface Constants {
 
     int[] GUI_BUTTON_IDS = {R.id.left_btn, R.id.right_btn, R.id.up_btn, R.id.down_btn, R.id.start_btn, R.id.reset_btn};
 
+    int BOARD_MIN_ROWS = 3;
+    int BOARD_MIN_COLUMNS = 4;
+    int BOARD_MAX_ROWS = 8;
+    int BOARD_MAX_COLUMNS = 10;
+    int EXTRA_BLACK_HOLES = 3;
 }

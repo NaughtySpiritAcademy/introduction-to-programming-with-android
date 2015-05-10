@@ -37,7 +37,7 @@ public class Board implements CanvasDrawable {
         canvasView.setCellWidth(cellWidth);
         canvasView.setCellHeight(cellHeight);
         canvasView.add(this);
-        canvasView.invalidate();
+        reset();
     }
 
     @Override
@@ -60,14 +60,13 @@ public class Board implements CanvasDrawable {
         gameEntities.add(entity);
     }
 
-    public void onCommandExecuted(Ship ship) {
+    public void checkForInvalidPosition(Ship ship) {
         ship.checkForBoardBounds(size);
         ship.checkForEntityCollisions(gameEntities);
-        canvasView.invalidate();
+        reset();
     }
 
-    public void resetLevel(Ship ship) {
-        ship.reset();
+    public void reset() {
         canvasView.invalidate();
     }
 

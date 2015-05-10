@@ -5,11 +5,11 @@ package co.naughtyspirit.spaceshipcommander.entities;
  * on 5/9/15.
  */
 public interface ShipListener {
-    void onCollisionWithObstacle();
+    void onFallingInBlackHole();
 
     void onLandingOnPlanet();
 
-    void onCollisionWithBoard();
+    void onOutsideOfGalaxy();
 
     void onPlanetNotReachedAfterExecutingCommands();
 
