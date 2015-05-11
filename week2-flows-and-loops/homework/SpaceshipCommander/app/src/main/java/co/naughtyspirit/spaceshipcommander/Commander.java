@@ -31,12 +31,11 @@ public class Commander {
 
     public static int getShip(int passengerCount) {
         if (passengerCount < 10) {
-            return R.drawable.ship_small;
+            return 1;
         } else if (passengerCount < 30) {
-            return R.drawable.ship_medium;
-        } else {
-            return R.drawable.ship_big;
+            return 2;
         }
-//        return R.drawable.ship_small;
+        return 3;
+//        return 1;
     }
 }

@@ -33,9 +33,14 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        enableImmersiveMode();
         bindViews();
         startNewGame();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        enableImmersiveMode();
     }
 
     private void enableImmersiveMode() {
@@ -65,8 +70,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         int width = size.x;
         int height = size.y;
         board = new Board(width, height, boardSize, background, (CanvasView) findViewById(R.id.canvas_view));
-        int shipPassengerCount = Commander.getShip(levelGenerator.choosePassengerCount());
-        ship = new Ship(levelGenerator.chooseRandomBoardPosition(), getResources().getDrawable(shipPassengerCount), this);
+        int shipType = Commander.getShip(levelGenerator.choosePassengerCount());
+        ship = new Ship(levelGenerator.chooseRandomBoardPosition(), getResources().getDrawable(Constants.SHIP_TYPES.get(shipType)), this);
         board.add(ship);
         for (int i = 0; i < boardSize.rows + Constants.EXTRA_BLACK_HOLES; i++) {
             board.add(new BlackHole(levelGenerator.chooseRandomBoardPosition(), getResources().getDrawable(R.drawable.black_hole)));

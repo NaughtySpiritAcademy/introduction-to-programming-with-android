@@ -18,6 +18,12 @@ public interface Constants {
         put(R.id.right_btn, Command.Types.Right.name());
     }};
 
+    Map<Integer, Integer> SHIP_TYPES = new HashMap<Integer, Integer>() {{
+        put(1, R.drawable.ship_small);
+        put(2, R.drawable.ship_medium);
+        put(3, R.drawable.ship_big);
+    }};
+
     int[] GUI_BUTTON_IDS = {R.id.left_btn, R.id.right_btn, R.id.up_btn, R.id.down_btn, R.id.start_btn, R.id.reset_btn};
 
     int BOARD_MIN_ROWS = 3;
