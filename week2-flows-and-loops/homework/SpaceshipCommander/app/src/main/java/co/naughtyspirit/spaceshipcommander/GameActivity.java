@@ -4,132 +4,38 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
+import co.naughtyspirit.spaceshipcommander.entities.BlackHole;
 import co.naughtyspirit.spaceshipcommander.entities.Board;
-import co.naughtyspirit.spaceshipcommander.entities.GameEntity;
-import co.naughtyspirit.spaceshipcommander.entities.Obstacle;
 import co.naughtyspirit.spaceshipcommander.entities.Planet;
 import co.naughtyspirit.spaceshipcommander.entities.Ship;
-import co.naughtyspirit.spaceshipcommander.entities.ShipCollisionListener;
+import co.naughtyspirit.spaceshipcommander.entities.ShipListener;
 import co.naughtyspirit.spaceshipcommander.ui.CanvasView;
 
 
-public class GameActivity extends Activity implements View.OnClickListener, ShipCollisionListener {
+public class GameActivity extends Activity implements View.OnClickListener, ShipListener {
 
-    private CanvasView canvasView;
-
-    private final Queue<Command> commands = new LinkedList<>();
+    private Board board;
     private Ship ship;
-    private final Handler commandHandler = new Handler();
-    private final List<GameEntity> gameEntities = new ArrayList<>();
-    private final List<String> commandTexts = new ArrayList<>();
-
-    private int rows;
-    private int columns;
-    private TextView commandList;
-    private final int[] commandButtons = {R.id.left_btn, R.id.right_btn, R.id.up_btn, R.id.down_btn, R.id.start_btn, R.id.reset_btn};
-
-    Map<Integer, String> buttonToCommandText = new HashMap<Integer, String>() {{
-        put(R.id.up_btn, Command.Types.Up.name());
-        put(R.id.down_btn, Command.Types.Down.name());
-        put(R.id.left_btn, Command.Types.Left.name());
-        put(R.id.right_btn, Command.Types.Right.name());
-    }};
-
-    private Runnable commandRunnable = new Runnable() {
-        @Override
-        public void run() {
-            Command command = commands.poll();
-            ship.executeCommand(command);
-            boolean hasCollided = ship.checkForBoardBounds(rows, columns);
-            hasCollided = hasCollided || ship.checkForCollisions(gameEntities);
-            canvasView.invalidate();
-            if (!hasCollided) {
-                if (!commands.isEmpty()) {
-                    executeCommand();
-                } else {
-                    onAllCommandsExecuted();
-                }
-            }
-        }
-    };
+    private TextView commandListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         enableImmersiveMode();
         bindViews();
-
-        Point size = getWindowSize();
-        int width = size.x;
-        int height = size.y;
-
-        rows = 3;
-        columns = 3;
-        int cellWidth = width / columns;
-        int cellHeight = height / rows;
-        canvasView.setCellWidth(cellWidth);
-        canvasView.setCellHeight(cellHeight);
-        ship = new Ship(1, 1, this);
-        gameEntities.add(ship);
-        gameEntities.add(new Planet(2, 2));
-        gameEntities.add(new Obstacle(2, 3));
-        for (GameEntity entity : gameEntities) {
-            canvasView.addDrawable(entity);
-        }
-        canvasView.addDrawable(new Board(rows, columns));
-        canvasView.invalidate();
-    }
-
-    private void bindViews() {
-        for (int buttonId : commandButtons) {
-            findViewById(buttonId).setOnClickListener(this);
-        }
-        commandList = (TextView) findViewById(R.id.command_list);
-        canvasView = (CanvasView) findViewById(R.id.canvas_view);
-    }
-
-    private void onStartGame() {
-        for (int buttonId : commandButtons) {
-            findViewById(buttonId).setVisibility(View.GONE);
-        }
-        Commander commander = new Commander();
-        int[][] commands = commander.getCommands(commandTexts.toArray(new String[commandTexts.size()]));
-        for (int[] command : commands) {
-            this.commands.add(new Command(command[0], command[1]));
-        }
-        executeCommand();
-    }
-
-    private void executeCommand() {
-        commandHandler.postDelayed(commandRunnable, 1000);
-    }
-
-    private Point getWindowSize() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            display.getRealSize(size);
-        } else {
-            display.getSize(size);
-        }
-        return size;
+        startNewGame();
     }
 
     private void enableImmersiveMode() {
@@ -144,6 +50,61 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         }
     }
 
+    private void bindViews() {
+        for (int buttonId : Constants.GUI_BUTTON_IDS) {
+            findViewById(buttonId).setOnClickListener(this);
+        }
+        commandListView = (TextView) findViewById(R.id.command_list);
+    }
+
+    private void startNewGame() {
+        LevelGenerator levelGenerator = new LevelGenerator();
+        Board.Size boardSize = levelGenerator.getBoardSize();
+        Drawable background = getResources().getDrawable(R.drawable.background);
+        Point size = getWindowSize();
+        int width = size.x;
+        int height = size.y;
+        board = new Board(width, height, boardSize, background, (CanvasView) findViewById(R.id.canvas_view));
+        int shipPassengerCount = Commander.getShip(levelGenerator.choosePassengerCount());
+        ship = new Ship(levelGenerator.chooseRandomBoardPosition(), getResources().getDrawable(shipPassengerCount), this);
+        board.add(ship);
+        for (int i = 0; i < boardSize.rows + Constants.EXTRA_BLACK_HOLES; i++) {
+            board.add(new BlackHole(levelGenerator.chooseRandomBoardPosition(), getResources().getDrawable(R.drawable.black_hole)));
+        }
+        board.add(new Planet(levelGenerator.chooseRandomBoardPosition(), getResources().getDrawable(R.drawable.planet)));
+    }
+
+    private Point getWindowSize() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            display.getRealSize(size);
+        } else {
+            display.getSize(size);
+        }
+        return size;
+    }
+
+    private void onStartGame() {
+        for (int buttonId : Constants.GUI_BUTTON_IDS) {
+            findViewById(buttonId).setVisibility(View.GONE);
+        }
+        ship.executeCommands(prepareCommands());
+    }
+
+    private Queue<Command> prepareCommands() {
+        Queue<Command> commandQueue = new LinkedList<>();
+        if (commandListView.getText().length() > 0) {
+            String[] commandTexts = commandListView.getText().toString().split(", ");
+            int[][] commands = Commander.getCommands(commandTexts);
+            for (int[] command : commands) {
+                commandQueue.add(new Command(command[0], command[1]));
+            }
+        }
+        return commandQueue;
+    }
+
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.start_btn) {
@@ -151,11 +112,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         } else if (v.getId() == R.id.reset_btn) {
             onResetCommandList();
         } else {
-            if (commandList.getText().length() != 0) {
-                commandList.append(", ");
+            if (commandListView.getText().length() != 0) {
+                commandListView.append(", ");
             }
-            commandList.append(buttonToCommandText.get(v.getId()));
-            commandTexts.add(buttonToCommandText.get(v.getId()));
+            commandListView.append(Constants.BUTTON_IDS_TO_COMMAND.get(v.getId()));
         }
     }
 
@@ -164,57 +124,64 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
     }
 
     private void onGameOver() {
-        commandHandler.removeCallbacks(commandRunnable);
-        commands.clear();
-        commandList.setText("");
-        commandTexts.clear();
-        for (int buttonId : commandButtons) {
+        commandListView.setText("");
+        for (int buttonId : Constants.GUI_BUTTON_IDS) {
             findViewById(buttonId).setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public void onCollisionWithObstacle() {
+    public void onFallingInBlackHole() {
         onGameOver();
         showDialogGameOverDialog(R.string.mission_failed, R.string.into_black_hole, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
-                canvasView.invalidate();
+                resetLevel();
             }
         });
     }
 
     @Override
-    public void onCollisionWithPlanet() {
+    public void onLandingOnPlanet() {
         onGameOver();
-        showDialogGameOverDialog(R.string.mission_success, R.string.you_saved_the_day, new DialogInterface.OnClickListener() {
+        showDialogGameOverDialog(R.string.mission_success, R.string.you_are_awesome, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
+                startNewGame();
             }
         });
     }
 
     @Override
-    public void onCollisionWithBoard() {
+    public void onOutsideOfGalaxy() {
         onGameOver();
-        showDialogGameOverDialog(R.string.mission_failed, R.string.epic_fail, new DialogInterface.OnClickListener() {
+        showDialogGameOverDialog(R.string.mission_failed, R.string.hyperdrive_failure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
+                resetLevel();
             }
         });
     }
 
-    private void onAllCommandsExecuted() {
+    @Override
+    public void onPlanetNotReachedAfterExecutingCommands() {
         onGameOver();
-        showDialogGameOverDialog(R.string.mission_failed, R.string.almost_there, new DialogInterface.OnClickListener() {
+        showDialogGameOverDialog(R.string.mission_failed, R.string.try_again, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ship.reset();
+                resetLevel();
             }
         });
+    }
+
+    @Override
+    public void onCommandExecuted() {
+        board.checkForInvalidPosition(ship);
+    }
+
+    private void resetLevel() {
+        ship.resetPosition();
+        board.reset();
     }
 
     private void showDialogGameOverDialog(int title, int message, DialogInterface.OnClickListener okListener) {

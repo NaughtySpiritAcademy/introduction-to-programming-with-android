@@ -6,9 +6,9 @@ import android.graphics.drawable.Drawable;
  * Created by Naughty Spirit <hi@naughtyspirit.co>
  * on 5/9/15.
  */
-public class Planet extends GameEntity {
+public class BlackHole extends GameEntity {
 
-    public Planet(Board.Position position, Drawable image) {
+    public BlackHole(Board.Position position, Drawable image) {
         super(position, image);
     }
 }

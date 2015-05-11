@@ -1,12 +1,13 @@
 package co.naughtyspirit.spaceshipcommander.entities;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.os.CountDownTimer;
 
 import java.util.List;
+import java.util.Queue;
 
 import co.naughtyspirit.spaceshipcommander.Command;
+import co.naughtyspirit.spaceshipcommander.Constants;
 
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
@@ -14,55 +15,76 @@ import co.naughtyspirit.spaceshipcommander.Command;
  */
 public class Ship extends GameEntity {
 
-    private final Paint paint = new Paint();
-    private final ShipCollisionListener collisionListener;
-    private final int initialColumn;
-    private final int initialRow;
+    private final ShipListener shipListener;
+    private final Board.Position initialPosition;
+    private Queue<Command> commands;
+    private boolean hasCollided;
 
-    public Ship(int row, int column, ShipCollisionListener collisionListener) {
-        super(row, column);
-        this.initialRow = row;
-        this.initialColumn = column;
-        this.collisionListener = collisionListener;
-        paint.setColor(Color.RED);
+    public Ship(Board.Position position, Drawable image, ShipListener shipListener) {
+        super(position, image);
+        this.initialPosition = position;
+        this.shipListener = shipListener;
+        hasCollided = false;
     }
 
-    @Override
-    public void onDraw(Canvas canvas, int cellWidth, int cellHeight) {
-        int radius = canvas.getWidth() / 15;
-        canvas.drawCircle(column * cellWidth - (cellWidth / 2), row * cellHeight - (cellHeight / 2), radius, paint);
+
+    public void resetPosition() {
+        hasCollided = false;
+        position = initialPosition;
     }
+
 
     public void executeCommand(Command command) {
-        column += command.columns;
-        row += command.rows;
+        position = new Board.Position(position.row + command.rows, position.column + command.columns);
     }
 
-    public boolean checkForCollisions(List<GameEntity> gameEntities) {
+    public void executeCommands(Queue<Command> commands) {
+        this.commands = commands;
+        executeNextCommand();
+    }
+
+    public void checkForEntityCollisions(List<GameEntity> gameEntities) {
         for (GameEntity entity : gameEntities) {
-            if (entity.row == row && entity.column == column) {
-                if (entity instanceof Obstacle) {
-                    collisionListener.onCollisionWithObstacle();
-                    return true;
-                } else if (entity instanceof Planet) {
-                    collisionListener.onCollisionWithPlanet();
-                    return true;
+            if (entity.position.row == position.row && entity.position.column == position.column) {
+                if (entity instanceof BlackHole) {
+                    hasCollided = true;
+                    shipListener.onFallingInBlackHole();
+                } else if (entity instanceof Planet && commands.isEmpty()) {
+                    hasCollided = true;
+                    shipListener.onLandingOnPlanet();
                 }
             }
         }
-        return false;
     }
 
-    public boolean checkForBoardBounds(int rows, int columns) {
-        if (row <= 0 || row > rows || column <= 0 || column > columns) {
-            collisionListener.onCollisionWithBoard();
-            return true;
+    public void checkForBoardBounds(Board.Size boardSize) {
+        if (position.row <= 0 || position.row > boardSize.rows || position.column <= 0 || position.column > boardSize.columns) {
+            hasCollided = true;
+            shipListener.onOutsideOfGalaxy();
         }
-        return false;
     }
 
-    public void reset() {
-        this.row = initialRow;
-        this.column = initialColumn;
+    private void executeNextCommand() {
+        new CountDownTimer(Constants.SHIP_MOVE_TIME, Constants.SHIP_MOVE_TIME) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                if (commands.isEmpty()) {
+                    shipListener.onPlanetNotReachedAfterExecutingCommands();
+                    return;
+                }
+                Command command = commands.poll();
+                executeCommand(command);
+                shipListener.onCommandExecuted();
+                if (!hasCollided) {
+                    executeNextCommand();
+                }
+            }
+        }.start();
     }
 }
