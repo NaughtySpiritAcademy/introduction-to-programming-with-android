@@ -86,7 +86,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 break;
         }
 
-        if(MathWars.isCorrect(currentEquation.firstNumber, currentEquation.secondNumber,
+        if(MathWars.isCorrect(currentEquation.firstNumber, currentEquation.secondNumber, currentEquation.result,
                 currentEquation.operator.getSign(), answer)) {
             correctAttempts ++;
         }

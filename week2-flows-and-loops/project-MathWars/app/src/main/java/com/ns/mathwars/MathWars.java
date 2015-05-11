@@ -8,11 +8,11 @@ import java.util.Random;
  */
 public class MathWars {
 
-    public static boolean isCorrect(int firstNumber, int secondNumber, char operator, boolean playerAnswer) {
+    public static boolean isCorrect(int firstNumber, int secondNumber, int result, char operator, boolean playerAnswer) {
         return new Random().nextBoolean();
     }
 
-    public static int whoWins(int player1Result, int player2Result) {
+    public static int whoWins(int player1Points, int player2Points) {
         return new Random().nextInt(2) + 1;
     }
 }
