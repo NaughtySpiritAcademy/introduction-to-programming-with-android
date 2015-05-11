@@ -70,7 +70,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         int width = size.x;
         int height = size.y;
         board = new Board(width, height, boardSize, background, (CanvasView) findViewById(R.id.canvas_view));
-        int shipType = Commander.getShip(levelGenerator.choosePassengerCount());
+        int shipType = Commander.getShipType(levelGenerator.choosePassengerCount());
         ship = new Ship(levelGenerator.chooseRandomBoardPosition(), getResources().getDrawable(Constants.SHIP_TYPES.get(shipType)), this);
         board.add(ship);
         for (int i = 0; i < boardSize.rows + Constants.EXTRA_BLACK_HOLES; i++) {
