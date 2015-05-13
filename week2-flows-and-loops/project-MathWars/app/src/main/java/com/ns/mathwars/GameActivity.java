@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -32,6 +34,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     private int correctAttempts = 0;
     private CountDownTimer timer;
     private int playerNumber = 1;
+    private List<Boolean> answers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
         if(MathWars.isCorrect(currentEquation.firstNumber, currentEquation.secondNumber, currentEquation.result,
                 currentEquation.operator.getSign(), answer)) {
             correctAttempts ++;
+            answers.add(true);
+        } else {
+            answers.add(false);
         }
         allAttempts ++;
 
@@ -170,17 +176,18 @@ public class GameActivity extends Activity implements View.OnClickListener {
     }
 
     private void finishGame() {
-        final int points = computePoints();
+//        final int points = computePoints();
+        final boolean[] playerAnswers = convertListToArray(answers);
         AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
         builder.setTitle("Game Over");
-        builder.setMessage("Total points: " + points);
+        builder.setMessage("Attempts: " + correctAttempts + "/" + allAttempts);
         builder.setCancelable(false);
         builder.setNeutralButton("OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         Intent data = new Intent();
-                        data.putExtra("points", points);
+                        data.putExtra("playerAnswers", playerAnswers);
                         setResult(Activity.RESULT_OK, data);
                         finish();
                     }
@@ -190,10 +197,18 @@ public class GameActivity extends Activity implements View.OnClickListener {
         gameOverDialog.show();
     }
 
-    private int computePoints() {
-        int wrongAnswers = allAttempts - correctAttempts;
-        return correctAttempts * CORRECT_ANSWER_POINTS + wrongAnswers * WRONG_ANSWER_POINTS;
+    private boolean[] convertListToArray(List<Boolean> list) {
+        boolean[] result = new boolean[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+        return result;
     }
+
+//    private int computePoints() {
+//        int wrongAnswers = allAttempts - correctAttempts;
+//        return correctAttempts * CORRECT_ANSWER_POINTS + wrongAnswers * WRONG_ANSWER_POINTS;
+//    }
 
     class Equation {
         int firstNumber = 0;

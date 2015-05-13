@@ -16,7 +16,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private Button startButton;
 
     private int currentPlayerNumber = 1;
-    private int[] points = new int[PLAYERS_COUNT];
+    private boolean[][] playersAnswers = new boolean[PLAYERS_COUNT][PLAYERS_COUNT];
+//    private int[] points = new int[PLAYERS_COUNT];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK) {
-            int answersCount = data.getIntExtra("points", 0);
-            points[currentPlayerNumber - 1] = answersCount;
+            boolean[] playerAnswers = data.getBooleanArrayExtra("playerAnswers");
+            playersAnswers[currentPlayerNumber - 1] = playerAnswers;
         }
 
         if(currentPlayerNumber == PLAYERS_COUNT) {
+            int[] points = MathWars.calculatePoints(playersAnswers[0], playersAnswers[1]);
             Intent resultsIntent = new Intent(this, ResultsActivity.class);
             resultsIntent.putExtra("points", points);
             startActivity(resultsIntent);
