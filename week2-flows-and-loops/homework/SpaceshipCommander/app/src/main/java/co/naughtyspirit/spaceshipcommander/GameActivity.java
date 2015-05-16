@@ -94,19 +94,22 @@ public class GameActivity extends Activity implements View.OnClickListener, Ship
         for (int buttonId : Constants.GUI_BUTTON_IDS) {
             findViewById(buttonId).setVisibility(View.GONE);
         }
-        ship.executeCommands(prepareCommands());
+        Queue<Command> commandsToExecute = new LinkedList<>();
+        Queue<int[]> preparedCommands = prepareCommands();
+        for (int[] command : preparedCommands) {
+            commandsToExecute.add(new Command(command[0], command[1]));
+        }
+        ship.executeCommands(commandsToExecute);
     }
 
-    private Queue<Command> prepareCommands() {
-        Queue<Command> commandQueue = new LinkedList<>();
-        if (commandListView.getText().length() > 0) {
-            String[] commandTexts = commandListView.getText().toString().split(", ");
-            int[][] commands = Commander.getCommands(commandTexts);
-            for (int[] command : commands) {
-                commandQueue.add(new Command(command[0], command[1]));
-            }
+    private Queue<int[]> prepareCommands() {
+        CharSequence commandsText = commandListView.getText();
+        if (commandsText.length() > 0) {
+            String[] commandTexts = commandsText.toString().split(", ");
+            return Commander.translateCommands(commandTexts);
+        } else {
+            return Commander.translateCommands(new String[]{});
         }
-        return commandQueue;
     }
 
 
