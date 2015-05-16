@@ -39,10 +39,35 @@ public class MathWars {
     }
 
     public static int[] calculatePoints(boolean[] player1Answers, boolean[] player2Answers) {
-        return new int[]{100, 200};
+
+        int points1 = 0;
+        for(int i = 0; i < player1Answers.length; i = i + 1) {
+           boolean answer = player1Answers[i];
+           if(answer) {
+               points1 = points1 + 10;
+           } else {
+               points1 = points1 - 7;
+           }
+        }
+
+        int points2 = 0;
+        for(int i = 0; i < player2Answers.length; i = i + 1) {
+            boolean answer = player2Answers[i];
+            if(answer) {
+                points2 = points2 + 10;
+            } else {
+                points2 = points2 - 7;
+            }
+        }
+
+        return new int[] { points1, points2 };
     }
 
     public static int whoWins(int player1Points, int player2Points) {
-        return 1;
+        if(player1Points > player2Points) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 }
