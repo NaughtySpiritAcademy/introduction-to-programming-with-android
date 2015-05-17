@@ -1,17 +1,28 @@
 package co.naughtyspirit.shapedrawer;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import co.naughtyspirit.shapedrawer.shapes.Oval;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
+import co.naughtyspirit.shapedrawer.shapes.Triangle;
 
 public class ShapeManager {
     static List<Shape> shapes = new ArrayList<Shape>();
-    public static void addShape(Shape shape, int position) {
+    public static void addShape(Context context, String shapeName, int position) {
+        Shape shape;
+        if(shapeName.equals("Triangle")) {
+            shape = new Triangle(context);
+        } else {
+            shape = new Oval(context);
+        }
+
         if(position == -1) {
             shapes.add(shape);
         } else {
-            shapes.add(0, shape);
+            shapes.add(position, shape);
         }
     }
 

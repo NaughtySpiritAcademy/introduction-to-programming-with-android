@@ -3,6 +3,8 @@ package co.naughtyspirit.shapedrawer.shapes;
 import android.content.Context;
 import android.graphics.Canvas;
 
+import co.naughtyspirit.shapedrawer.ShapeManager;
+
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
  * * on 5/17/15.
