@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Waiting in Line</string>
+    <string name="complete_dialog_title">All done</string>
+    <string name="complete_dialog_message">All clients have been processed</string>
+</resources>
