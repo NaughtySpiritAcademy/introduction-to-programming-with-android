@@ -19,16 +19,15 @@ public class Triangle extends Shape {
         super(context);
 
         path = new Path();
+        paint.setStyle(Paint.Style.FILL);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        paint.setStyle(Paint.Style.FILL);
-
-        path.lineTo(200, 200);
-        path.lineTo(400, 100);
-        path.lineTo(400, 200);
-        path.lineTo(200, 200);
+        path.lineTo(width / 2 - 100, height / 2 + 100);
+        path.lineTo(width / 2, height / 2 - 200);
+        path.lineTo(width / 2 + 100, height / 2 + 100);
+        path.lineTo(width / 2 - 100, height / 2 + 100);
         path.close();
 
         canvas.drawPath(path, paint);

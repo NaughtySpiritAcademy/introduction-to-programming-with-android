@@ -3,15 +3,10 @@ package co.naughtyspirit.shapedrawer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-
-import java.util.ArrayList;
-
-import co.naughtyspirit.shapedrawer.shapes.Oval;
-import co.naughtyspirit.shapedrawer.shapes.Shape;
-import co.naughtyspirit.shapedrawer.shapes.Triangle;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -19,13 +14,11 @@ import co.naughtyspirit.shapedrawer.shapes.Triangle;
  * *
  * * NaughtySpirit 2015
  */
-public class DrawerActivity extends Activity {
+public class DrawerActivity extends Activity implements OnClickListener {
 
     private SurfaceView surfaceView;
-    private Button next;
-    private Button previous;
-
-    private ArrayList<Shape> shapes = new ArrayList<>();
+    private Button nextShape;
+    private Button previousShape;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,31 +30,29 @@ public class DrawerActivity extends Activity {
 
     private void initUI() {
         surfaceView = new SurfaceView(this);
-
-        shapes.add(new Triangle(this));
-        shapes.add(new Oval(this));
-
-        surfaceView.addShapes(shapes);
-
-        ((RelativeLayout) findViewById(R.id.layout)).addView(surfaceView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        ((RelativeLayout) findViewById(R.id.layout)).addView(surfaceView, new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
-        next = (Button) findViewById(R.id.next);
-        next.bringToFront();
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                surfaceView.showNext();
-            }
-        });
+        nextShape = (Button) findViewById(R.id.next);
+        nextShape.bringToFront();
+        nextShape.setOnClickListener(this);
 
-        previous = (Button) findViewById(R.id.previous);
-        previous.bringToFront();
-        previous.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                surfaceView.showPrevious();
-            }
-        });
+        previousShape = (Button) findViewById(R.id.previous);
+        previousShape.bringToFront();
+        previousShape.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.next:
+                surfaceView.drawNextShape();
+                break;
+
+            case R.id.previous:
+                surfaceView.drawPreviousShape();
+                break;
+        }
     }
 }

@@ -17,8 +17,8 @@ public class Oval extends Shape {
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas);
-
         canvas.drawCircle(width / 2, height / 2, 100, paint);
+
+        super.draw(canvas);
     }
 }

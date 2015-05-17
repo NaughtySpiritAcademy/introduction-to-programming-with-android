@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.naughtyspirit.shapedrawer.shapes.Shape;
 
@@ -16,27 +17,23 @@ import co.naughtyspirit.shapedrawer.shapes.Shape;
  */
 public class SurfaceView extends android.view.SurfaceView {
 
-    private ArrayList<Shape> shapes = new ArrayList<>();
+    private List<Shape> shapes = new ArrayList<>();
     private int currentIdx = 0;
 
     public SurfaceView(Context context) {
         super(context);
 
         setBackgroundColor(Color.WHITE);
-    }
 
-    public void addShapes(ArrayList<Shape> shapes) {
-        this.shapes = shapes;
+        shapes = ShapeManager.getShapes();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         shapes.get(currentIdx).draw(canvas);
-
     }
 
-    public void showNext() {
+    public void drawNextShape() {
         invalidate();
 
         if (currentIdx < shapes.size() - 1) {
@@ -44,7 +41,7 @@ public class SurfaceView extends android.view.SurfaceView {
         }
     }
 
-    public void showPrevious() {
+    public void drawPreviousShape() {
         invalidate();
 
         if (currentIdx > 0) {
