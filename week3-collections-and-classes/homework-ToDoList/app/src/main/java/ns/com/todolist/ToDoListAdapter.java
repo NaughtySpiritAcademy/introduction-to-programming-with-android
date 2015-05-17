@@ -13,18 +13,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ns.com.todolist.base.BaseTask;
+import ns.com.todolist.base.BaseTaskManager;
+
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
  * on 5/16/15.
  */
 public class ToDoListAdapter extends BaseAdapter{
-    ArrayList<Task> tasks = new ArrayList<>();
+    ArrayList<BaseTask> tasks = new ArrayList<>();
     Context context;
-    TasksManager tasksManager;
+    BaseTaskManager tasksManager;
 
-    public ToDoListAdapter(Context context, TasksManager tasksManager) {
+    public ToDoListAdapter(Context context, BaseTaskManager tasksManager) {
         this.context = context;
-        this.tasks = tasksManager.getItems();
+        this.tasks = tasksManager.getTasks();
         this.tasksManager = tasksManager;
     }
 
@@ -34,7 +37,7 @@ public class ToDoListAdapter extends BaseAdapter{
     }
 
     @Override
-    public Task getItem(int i) {
+    public BaseTask getItem(int i) {
         return tasks.get(i);
     }
 
@@ -50,7 +53,7 @@ public class ToDoListAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.list_item, null);
         }
 
-        final Task task = getItem(position);
+        final BaseTask task = getItem(position);
         if(task.isFinished()) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.task_done));
         }
@@ -97,12 +100,12 @@ public class ToDoListAdapter extends BaseAdapter{
         return convertView;
     }
 
-    public void addItem(Task task) {
+    public void addItem(BaseTask task) {
         tasksManager.addItem(task);
         notifyDataSetChanged();
     }
 
-    public void addItemAtIndex(int index, Task task) {
+    public void addItemAtIndex(int index, BaseTask task) {
         tasksManager.addTaskAtIndex(index, task);
         notifyDataSetChanged();
     }
@@ -112,7 +115,7 @@ public class ToDoListAdapter extends BaseAdapter{
         notifyDataSetChanged();
     }
 
-    public void setTask(int itemIndex, Task task) {
+    public void setTask(int itemIndex, BaseTask task) {
         tasksManager.setTask(itemIndex, task);
         notifyDataSetChanged();
     }

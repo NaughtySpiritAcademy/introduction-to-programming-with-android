@@ -3,45 +3,56 @@ package ns.com.todolist;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ns.com.todolist.base.BaseTask;
+import ns.com.todolist.base.BaseTaskManager;
+
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
  * on 5/16/15.
  */
-public class TasksManager {
-    ArrayList<Task> tasks;
+public class TasksManager extends BaseTaskManager {
+    ArrayList<BaseTask> tasks;
 
+    @Override
     public void initialize() {
         tasks = new ArrayList<>();
         tasks.add(new Task("Meet Mariika", 3, new Date()));
     }
 
-    public ArrayList<Task> getItems() {
+    @Override
+    public ArrayList<BaseTask> getTasks() {
         return tasks;
     }
 
-    public void addItem(Task task) {
+    @Override
+    public void addItem(BaseTask task) {
         tasks.add(task);
     }
 
-    public void addTaskAtIndex(int index, Task task) {
+    @Override
+    public void addTaskAtIndex(int index, BaseTask task) {
         if(index <= tasks.size()) {
             tasks.add(index, task);
         }
     }
 
+    @Override
     public void removeTask(int index) {
         tasks.remove(index);
     }
 
-    public Task getTask(int index) {
+    @Override
+    public BaseTask getTask(int index) {
         return tasks.get(index);
     }
 
-    public void setTask(int index, Task item) {
+    @Override
+    public void setTask(int index, BaseTask item) {
         tasks.set(index, item);
     }
 
-    public void markTaskAsFinished(Task task) {
+    @Override
+    public void markTaskAsFinished(BaseTask task) {
         task.setIsFinished(true);
     }
 }
