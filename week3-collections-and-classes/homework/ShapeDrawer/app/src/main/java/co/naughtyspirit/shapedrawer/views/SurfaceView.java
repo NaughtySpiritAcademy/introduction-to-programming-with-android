@@ -3,6 +3,7 @@ package co.naughtyspirit.shapedrawer.views;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,20 @@ public class SurfaceView extends android.view.SurfaceView {
         shapes = ShapeManager.getShapes();
     }
 
+    public SurfaceView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        setBackgroundColor(Color.WHITE);
+
+        shapes = ShapeManager.getShapes();
+    }
+
+    public SurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        setBackgroundColor(Color.WHITE);
+
+        shapes = ShapeManager.getShapes();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         shapes.get(currentIdx).draw(canvas);
@@ -48,5 +63,9 @@ public class SurfaceView extends android.view.SurfaceView {
         if (currentIdx > 0) {
             currentIdx -= 1;
         }
+    }
+
+    public int getSelectedIndex() {
+        return currentIdx;
     }
 }

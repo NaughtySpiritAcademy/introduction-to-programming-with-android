@@ -1,6 +1,7 @@
 package co.naughtyspirit.shapedrawer.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.naughtyspirit.shapedrawer.R;
@@ -24,8 +26,8 @@ public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
         this.context = context;
     }
 
-    public void updateShapes(List<Shape> shapes) {
-        this.shapes = shapes;
+    public void updateShapes() {
+        shapes = ShapeManager.getShapes();
         notifyDataSetChanged();
     }
 
@@ -38,17 +40,25 @@ public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int i) {
+        Shape shape = shapes.get(i);
         viewHolder.ivShape.setOnClickListener(null);
-        if(shapes.get(i).getClass().getSimpleName().toLowerCase().contains("triangle")) {
+        if(shape.getClass().getSimpleName().toLowerCase().contains("triangle")) {
             viewHolder.ivShape.setImageResource(R.drawable.ic_triangle);
         } else {
             viewHolder.ivShape.setImageResource(R.drawable.ic_circle);
         }
+
+        if(shape.isSelected()) {
+            viewHolder.ivShape.setBackgroundColor(Color.GREEN);
+        } else {
+            viewHolder.ivShape.setBackgroundColor(Color.parseColor("#ffffffff"));
+        }
+
         viewHolder.ivShape.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ShapeManager.removeShape(i);
-                updateShapes(ShapeManager.getShapes());
+                updateShapes();
             }
         });
 

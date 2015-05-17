@@ -14,7 +14,7 @@ import android.view.WindowManager;
  * * NaughtySpirit 2015
  */
 public class Shape extends View {
-
+    private boolean isSelected;
     protected Paint paint;
     protected WindowManager wm;
     protected int width;
@@ -32,5 +32,14 @@ public class Shape extends View {
 
         width = metrics.widthPixels;
         height = metrics.heightPixels;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

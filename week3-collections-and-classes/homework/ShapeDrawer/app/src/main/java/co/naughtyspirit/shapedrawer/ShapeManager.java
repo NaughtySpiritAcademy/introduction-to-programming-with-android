@@ -24,6 +24,22 @@ public class ShapeManager {
         }
     }
 
+    public static void markAsSelected(int index) {
+        for (int i = 0; i < shapes.size(); i++) {
+            if(i == index) {
+                shapes.get(i).setIsSelected(true);
+            } else {
+                shapes.get(i).setIsSelected(false);
+            }
+        }
+    }
+
+    public static void resetSelected() {
+        for (int i = 0; i < shapes.size(); i++) {
+            shapes.get(i).setIsSelected(false);
+        }
+    }
+
     public static List<Shape> getShapes() {
         return shapes;
     }
