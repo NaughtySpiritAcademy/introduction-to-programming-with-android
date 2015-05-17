@@ -4,14 +4,26 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
+import co.naughtyspirit.shapedrawer.shapes.Oval;
+import co.naughtyspirit.shapedrawer.shapes.Triangle;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
+    ImageView ivCircle;
+    ImageView ivTriangle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ivCircle = (ImageView) findViewById(R.id.iv_circle);
+        ivTriangle = (ImageView) findViewById(R.id.iv_triangle);
+        ivCircle.setOnClickListener(this);
+        ivTriangle.setOnClickListener(this);
     }
 
     @Override
@@ -34,5 +46,17 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_circle:
+                ShapeManager.addShape(new Oval(this));
+                break;
+            case R.id.iv_triangle:
+                ShapeManager.addShape(new Triangle(this));
+                break;
+        }
     }
 }
