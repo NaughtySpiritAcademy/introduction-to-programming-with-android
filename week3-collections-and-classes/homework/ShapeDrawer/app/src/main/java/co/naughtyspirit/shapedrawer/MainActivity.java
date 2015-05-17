@@ -25,7 +25,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
     ImageView ivTriangle;
     ShapesListView shapesListView;
 
-    Shape shapeToAdd;
+    String shapeToAdd;
 
     PositionDialog dialog;
     @Override
@@ -86,11 +86,11 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
         boolean shouldDisplayDialog = false;
         switch (view.getId()) {
             case R.id.iv_circle:
-                shapeToAdd = new Oval(this);
+                shapeToAdd = "Oval";
                 shouldDisplayDialog = true;
                 break;
             case R.id.iv_triangle:
-                shapeToAdd = new Triangle(this);
+                shapeToAdd = "Triangle";
                 shouldDisplayDialog = true;
                 break;
             case R.id.preview:
@@ -112,7 +112,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
 
     @Override
     public void onPositionSelected(int position) {
-        ShapeManager.addShape(shapeToAdd, position);
+        ShapeManager.addShape(this, shapeToAdd, position);
         shapesListView.setShapes(ShapeManager.getShapes());
     }
 }
