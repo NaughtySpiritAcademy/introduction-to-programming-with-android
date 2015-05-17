@@ -1,20 +1,32 @@
 package co.naughtyspirit.shapedrawer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import co.naughtyspirit.shapedrawer.dialogs.PositionDialog;
+import co.naughtyspirit.shapedrawer.dialogs.PositionDialog.OnPositionSelectedListener;
 import co.naughtyspirit.shapedrawer.shapes.Oval;
+import co.naughtyspirit.shapedrawer.shapes.Shape;
 import co.naughtyspirit.shapedrawer.shapes.Triangle;
+import co.naughtyspirit.shapedrawer.views.ShapesListView;
 
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener, OnPositionSelectedListener {
 
+    Button btnPreview;
     ImageView ivCircle;
     ImageView ivTriangle;
+    ShapesListView shapesListView;
+
+    Shape shapeToAdd;
+
+    PositionDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +34,25 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         ivCircle = (ImageView) findViewById(R.id.iv_circle);
         ivTriangle = (ImageView) findViewById(R.id.iv_triangle);
+        btnPreview = (Button) findViewById(R.id.preview);
+        shapesListView = (ShapesListView) findViewById(R.id.lv_shapes);
+
         ivCircle.setOnClickListener(this);
         ivTriangle.setOnClickListener(this);
+        btnPreview.setOnClickListener(this);
+        dialog = new PositionDialog(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dialog.setOnPositionSelectedListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dialog.removeOnPositionSelectedListener(this);
     }
 
     @Override
@@ -50,13 +79,32 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        boolean shouldDisplayDialog = false;
         switch (view.getId()) {
             case R.id.iv_circle:
-                ShapeManager.addShape(new Oval(this));
+                shapeToAdd = new Oval(this);
+                shouldDisplayDialog = true;
                 break;
             case R.id.iv_triangle:
-                ShapeManager.addShape(new Triangle(this));
+                shapeToAdd = new Triangle(this);
+                shouldDisplayDialog = true;
                 break;
+            case R.id.preview:
+                Intent i = new Intent(this, DrawerActivity.class);
+                startActivity(i);
+                break;
+            default:
+                shouldDisplayDialog = false;
         }
+
+        if(shouldDisplayDialog == true) {
+            dialog.show();
+        }
+    }
+
+    @Override
+    public void onPositionSelected(int position) {
+        ShapeManager.addShape(shapeToAdd, position);
+        shapesListView.setShapes(ShapeManager.getShapes());
     }
 }

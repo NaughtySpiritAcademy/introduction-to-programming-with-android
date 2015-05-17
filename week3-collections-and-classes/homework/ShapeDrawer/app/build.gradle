@@ -20,7 +20,8 @@ android {
 }
 
 dependencies {
-    compile "org.lucasr.twowayview:twowayview:0.1.4"
+    compile 'com.github.ksoichiro:richbuttons:0.1.1@aar'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:recyclerview-v7:22.0.+'
     compile "com.android.support:support-v4:22.0.+"
 }

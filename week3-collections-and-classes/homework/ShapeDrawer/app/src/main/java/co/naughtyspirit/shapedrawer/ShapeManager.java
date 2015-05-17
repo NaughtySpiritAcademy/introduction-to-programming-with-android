@@ -7,8 +7,12 @@ import co.naughtyspirit.shapedrawer.shapes.Shape;
 
 public class ShapeManager {
     static List<Shape> shapes = new ArrayList<Shape>();
-    public static void addShape(Shape shape) {
-        shapes.add(shape);
+    public static void addShape(Shape shape, int position) {
+        if(position == -1) {
+            shapes.add(shape);
+        } else {
+            shapes.add(0, shape);
+        }
     }
 
     public static void removeShape(int index) {

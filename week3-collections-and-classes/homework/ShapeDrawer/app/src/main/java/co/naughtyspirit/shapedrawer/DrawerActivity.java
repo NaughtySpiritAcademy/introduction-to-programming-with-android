@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import co.naughtyspirit.shapedrawer.views.SurfaceView;
+
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
  * * on 5/17/15.

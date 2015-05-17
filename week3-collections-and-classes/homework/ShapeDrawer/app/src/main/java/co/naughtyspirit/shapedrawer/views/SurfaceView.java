@@ -1,4 +1,4 @@
-package co.naughtyspirit.shapedrawer;
+package co.naughtyspirit.shapedrawer.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,7 @@ import android.graphics.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.naughtyspirit.shapedrawer.ShapeManager;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
 
 /**
