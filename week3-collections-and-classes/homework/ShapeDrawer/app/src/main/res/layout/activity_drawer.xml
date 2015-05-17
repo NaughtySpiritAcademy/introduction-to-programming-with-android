@@ -4,6 +4,28 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <co.naughtyspirit.shapedrawer.views.SurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <co.naughtyspirit.shapedrawer.views.ShapesListView
+        android:id="@+id/lv_shapes"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </co.naughtyspirit.shapedrawer.views.ShapesListView>
+
+    <TextView
+        android:id="@+id/tv_shape_index"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textSize="22sp"
+        android:text="0"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        />
+
     <Button
         android:id="@+id/next"
         style="@style/RbButton.Inverse.Green"

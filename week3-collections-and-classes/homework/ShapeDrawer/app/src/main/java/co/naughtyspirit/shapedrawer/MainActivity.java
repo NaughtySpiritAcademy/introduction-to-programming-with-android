@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import co.naughtyspirit.shapedrawer.dialogs.PositionDialog;
 import co.naughtyspirit.shapedrawer.dialogs.PositionDialog.OnPositionSelectedListener;
@@ -47,6 +48,9 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
     protected void onResume() {
         super.onResume();
         dialog.setOnPositionSelectedListener(this);
+
+        ShapeManager.resetSelected();
+        shapesListView.setShapes(ShapeManager.getShapes());
     }
 
     @Override
@@ -90,6 +94,10 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
                 shouldDisplayDialog = true;
                 break;
             case R.id.preview:
+                if(ShapeManager.getShapes() == null || ShapeManager.getShapes().size() <= 0) {
+                    Toast.makeText(this, "Add some shapes!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent i = new Intent(this, DrawerActivity.class);
                 startActivity(i);
                 break;

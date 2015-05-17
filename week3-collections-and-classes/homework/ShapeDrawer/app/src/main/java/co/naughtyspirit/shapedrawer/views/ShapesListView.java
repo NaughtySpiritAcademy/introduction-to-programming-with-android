@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import java.util.List;
 
 import co.naughtyspirit.shapedrawer.R;
+import co.naughtyspirit.shapedrawer.ShapeManager;
 import co.naughtyspirit.shapedrawer.adapters.ShapeAdapter;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
 
@@ -47,6 +48,11 @@ public class ShapesListView extends RelativeLayout {
         resetAdapter();
     }
 
+    public void selectShape(int index) {
+        ShapeManager.markAsSelected(index);
+        resetAdapter();
+    }
+
     private void init(Context context) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.view_shapes_list, this, true);
@@ -65,7 +71,7 @@ public class ShapesListView extends RelativeLayout {
             adapter = new ShapeAdapter(getContext(), shapes);
             recyclerView.setAdapter(adapter);
         } else {
-            adapter.updateShapes(shapes);
+            adapter.updateShapes();
         }
     }
 }
