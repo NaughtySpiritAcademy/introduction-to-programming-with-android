@@ -17,6 +17,7 @@ import co.naughtyspirit.shapedrawer.shapes.Shape;
 public class SurfaceView extends android.view.SurfaceView {
 
     private ArrayList<Shape> shapes = new ArrayList<>();
+    private int currentIdx = 0;
 
     public SurfaceView(Context context) {
         super(context);
@@ -30,7 +31,24 @@ public class SurfaceView extends android.view.SurfaceView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
 
+        shapes.get(currentIdx).draw(canvas);
+
+    }
+
+    public void showNext() {
+        invalidate();
+
+        if (currentIdx < shapes.size() - 1) {
+            currentIdx += 1;
+        }
+    }
+
+    public void showPrevious() {
+        invalidate();
+
+        if (currentIdx > 0) {
+            currentIdx -= 1;
+        }
     }
 }

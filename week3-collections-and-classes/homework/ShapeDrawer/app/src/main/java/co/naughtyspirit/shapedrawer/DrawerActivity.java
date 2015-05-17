@@ -2,12 +2,14 @@ package co.naughtyspirit.shapedrawer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
+import co.naughtyspirit.shapedrawer.shapes.Oval;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
 import co.naughtyspirit.shapedrawer.shapes.Triangle;
 
@@ -20,6 +22,8 @@ import co.naughtyspirit.shapedrawer.shapes.Triangle;
 public class DrawerActivity extends Activity {
 
     private SurfaceView surfaceView;
+    private Button next;
+    private Button previous;
 
     private ArrayList<Shape> shapes = new ArrayList<>();
 
@@ -35,10 +39,29 @@ public class DrawerActivity extends Activity {
         surfaceView = new SurfaceView(this);
 
         shapes.add(new Triangle(this));
+        shapes.add(new Oval(this));
 
         surfaceView.addShapes(shapes);
 
-        addContentView(surfaceView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        ((RelativeLayout) findViewById(R.id.layout)).addView(surfaceView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
+
+        next = (Button) findViewById(R.id.next);
+        next.bringToFront();
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                surfaceView.showNext();
+            }
+        });
+
+        previous = (Button) findViewById(R.id.previous);
+        previous.bringToFront();
+        previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                surfaceView.showPrevious();
+            }
+        });
     }
 }

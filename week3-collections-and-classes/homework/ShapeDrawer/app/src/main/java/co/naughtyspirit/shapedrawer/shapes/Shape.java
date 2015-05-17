@@ -1,7 +1,11 @@
 package co.naughtyspirit.shapedrawer.shapes;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -11,7 +15,22 @@ import android.view.View;
  */
 public class Shape extends View {
 
+    protected Paint paint;
+    protected WindowManager wm;
+    protected int width;
+    protected int height;
+
     public Shape(Context context) {
         super(context);
+
+        paint = new Paint();
+        paint.setColor(Color.BLACK);
+
+        wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(metrics);
+
+        width = metrics.widthPixels;
+        height = metrics.heightPixels;
     }
 }
