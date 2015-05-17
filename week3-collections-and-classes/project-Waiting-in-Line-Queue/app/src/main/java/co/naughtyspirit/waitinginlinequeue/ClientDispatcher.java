@@ -1,6 +1,6 @@
 package co.naughtyspirit.waitinginlinequeue;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 /**
@@ -11,7 +11,7 @@ public class ClientDispatcher {
     Queue<Integer> clients;
 
     public Queue<Integer> createClients() {
-        clients = new LinkedList<>();
+        clients = new ArrayDeque<>();
         for (int i = 1; i <= 4; i++) {
             clients.add(i);
         }
@@ -20,5 +20,9 @@ public class ClientDispatcher {
 
     public int getNextClient() {
         return clients.poll();
+    }
+
+    public boolean hasNoMoreClients() {
+        return clients.isEmpty();
     }
 }

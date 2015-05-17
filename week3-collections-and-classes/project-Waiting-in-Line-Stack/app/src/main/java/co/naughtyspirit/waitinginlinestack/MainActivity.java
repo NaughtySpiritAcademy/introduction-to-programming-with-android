@@ -46,7 +46,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 nextClient.goToDesk();
                 clients.pop();
                 drawScene(nextClient);
-                if (clients.isEmpty()) {
+                if (clientDispatcher.hasNoMoreClients()) {
                     showDialog(R.string.complete_dialog_title, R.string.complete_dialog_message);
                 }
                 break;

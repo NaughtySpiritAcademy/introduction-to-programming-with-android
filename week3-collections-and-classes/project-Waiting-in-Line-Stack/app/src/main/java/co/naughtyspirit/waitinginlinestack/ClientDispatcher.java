@@ -20,4 +20,8 @@ public class ClientDispatcher {
     public int getNextClient() {
         return clients.pop();
     }
+
+    public boolean hasNoMoreClients() {
+        return clients.empty();
+    }
 }
