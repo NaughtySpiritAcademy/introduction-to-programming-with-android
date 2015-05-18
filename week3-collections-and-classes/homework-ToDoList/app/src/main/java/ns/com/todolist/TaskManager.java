@@ -1,7 +1,6 @@
 package ns.com.todolist;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
@@ -11,33 +10,30 @@ public class TaskManager {
     ArrayList<Task> tasks;
 
     public void initialize() {
-        tasks = new ArrayList<>();
-        tasks.add(new Task("Meet Mariika", 3, new Date()));
+
     }
 
     public void addItem(Task task) {
-        tasks.add(task);
+
     }
 
     public void addTaskAtIndex(int index, Task task) {
-        if (index <= tasks.size()) {
-            tasks.add(index, task);
-        }
+
     }
 
     public void removeTask(int index) {
-        tasks.remove(index);
+
     }
 
     public ArrayList<Task> getTasks() {
-        return tasks;
+        return null;
     }
 
     public void setTask(int index, Task item) {
-        tasks.set(index, item);
+
     }
 
     public void markTaskAsFinished(Task task) {
-        task.setIsFinished(true);
+
     }
 }
