@@ -2,9 +2,6 @@
 package ns.com.todolist.base;
 
 import java.util.ArrayList;
-import java.util.Date;
-
-import ns.com.todolist.Task;
 
 /**
  * Created by nmp on 15-5-17.
