@@ -21,7 +21,7 @@ import java.util.List;
 public class ToDoListAdapter extends BaseAdapter {
     List<TaskWrapper> tasks = new ArrayList<>();
     Context context;
-    TaskManager tasksManager;
+    TaskManager taskManager;
 
     public ToDoListAdapter(Context context, TaskManager taskManager) {
         this.context = context;
@@ -33,7 +33,7 @@ public class ToDoListAdapter extends BaseAdapter {
         for (Task task : managerTasks) {
             tasks.add(TaskWrapper.wrap(task));
         }
-        this.tasksManager = taskManager;
+        this.taskManager = taskManager;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ToDoListAdapter extends BaseAdapter {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tasksManager.markTaskAsFinished(task.getTask());
+                taskManager.markTaskAsFinished(task.getTask());
                 notifyDataSetChanged();
             }
         });
@@ -106,22 +106,39 @@ public class ToDoListAdapter extends BaseAdapter {
     }
 
     public void addItem(Task task) {
-        tasksManager.addItem(task);
+        taskManager.addItem(task);
         notifyDataSetChanged();
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        syncTasks();
+        super.notifyDataSetChanged();
+    }
+
+    private void syncTasks() {
+        tasks.clear();
+        List<Task> managerTasks = taskManager.getTasks();
+        if (managerTasks == null) {
+            managerTasks = new ArrayList<>();
+        }
+        for (Task task : managerTasks) {
+            tasks.add(TaskWrapper.wrap(task));
+        }
+    }
+
     public void addItemAtIndex(int index, Task task) {
-        tasksManager.addTaskAtIndex(index, task);
+        taskManager.addTaskAtIndex(index, task);
         notifyDataSetChanged();
     }
 
     public void removeTask(int index) {
-        tasksManager.removeTask(index);
+        taskManager.removeTask(index);
         notifyDataSetChanged();
     }
 
     public void setTask(int itemIndex, Task task) {
-        tasksManager.setTask(itemIndex, task);
+        taskManager.setTask(itemIndex, task);
         notifyDataSetChanged();
     }
 

@@ -40,7 +40,7 @@ public class TaskWrapper {
 
     public void setPriority(int priority) {
         try {
-            Method method = getMethod("setPriority", Integer.class);
+            Method method = getMethod("setPriority", int.class);
             method.invoke(task, priority);
         } catch (Exception e) {
             e.printStackTrace();
