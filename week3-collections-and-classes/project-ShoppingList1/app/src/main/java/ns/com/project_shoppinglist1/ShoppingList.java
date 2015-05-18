@@ -7,9 +7,10 @@ import java.util.ArrayList;
  * on 5/16/15.
  */
 public class ShoppingList {
-    ArrayList<String> shoppingList = new ArrayList<>();
+    ArrayList<String> shoppingList;
 
     public void initialize() {
+        shoppingList = new ArrayList<>();
         shoppingList.add("Krushi");
         shoppingList.add("Fystyci");
         shoppingList.add("Semki");
