@@ -1,7 +1,6 @@
 package co.naughtyspirit.spaceshipcommander;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayDeque;
 
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
@@ -60,11 +59,8 @@ public class Commander {
         return result;
     }
 
-    public static Queue<int[]> translateCommands(String[] textCommands) {
-        Queue<int[]> commandQueue = new LinkedList<>();
-        if (textCommands.length == 0) {
-            return commandQueue;
-        }
+    public static ArrayDeque<int[]> translateCommands(String[] textCommands) {
+        ArrayDeque<int[]> commandQueue = new ArrayDeque<>();
         int[][] commands = Commander.getCommands(textCommands);
         for (int[] command : commands) {
             commandQueue.add(new int[]{command[0], command[1]});
