@@ -60,11 +60,6 @@ public class Commander {
     }
 
     public static ArrayDeque<int[]> translateCommands(String[] textCommands) {
-        ArrayDeque<int[]> commandQueue = new ArrayDeque<>();
-        int[][] commands = Commander.getCommands(textCommands);
-        for (int[] command : commands) {
-            commandQueue.add(new int[]{command[0], command[1]});
-        }
-        return commandQueue;
+        return null;
     }
 }
