@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DialogHelper.initialize(this);
 
         list = (ListView) findViewById(R.id.list);
         addBtn = (Button) findViewById(R.id.add);

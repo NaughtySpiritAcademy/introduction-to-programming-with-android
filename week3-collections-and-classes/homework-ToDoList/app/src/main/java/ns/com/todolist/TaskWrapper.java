@@ -24,6 +24,7 @@ public class TaskWrapper {
             Method method = task.getClass().getMethod("setTitle", String.class);
             method.invoke(task, title);
         } catch (Exception e) {
+            DialogHelper.showErrorDialog("setTitle method is missing");
             e.printStackTrace();
         }
     }
@@ -33,6 +34,7 @@ public class TaskWrapper {
             Method method = task.getClass().getMethod("getTitle");
             return (String) method.invoke(task);
         } catch (Exception e) {
+            DialogHelper.showErrorDialog("getTitle method is missing");
             e.printStackTrace();
             return "";
         }
@@ -43,6 +45,7 @@ public class TaskWrapper {
             Method method = getMethod("setPriority", Integer.class);
             method.invoke(task, priority);
         } catch (Exception e) {
+            DialogHelper.showErrorDialog("setPriority method is missing");
             e.printStackTrace();
         }
     }
@@ -52,6 +55,7 @@ public class TaskWrapper {
             Method method = task.getClass().getMethod("getPriority");
             return (int) method.invoke(task);
         } catch (Exception e) {
+            DialogHelper.showErrorDialog("getPriority method is missing");
             e.printStackTrace();
             return 0;
         }
@@ -62,6 +66,7 @@ public class TaskWrapper {
             Method method = getMethod("setDate", Date.class);
             method.invoke(task, date);
         } catch (Exception e) {
+            DialogHelper.showErrorDialog("setDate method is missing");
             e.printStackTrace();
         }
     }
@@ -71,6 +76,7 @@ public class TaskWrapper {
             Method method = getMethod("getDate");
             return (Date) method.invoke(task);
         } catch (Exception e) {
+            DialogHelper.showErrorDialog("getDate method is missing");
             e.printStackTrace();
             return new Date();
         }
@@ -81,6 +87,7 @@ public class TaskWrapper {
             Method method = getMethod("isFinished");
             return (Boolean) method.invoke(task);
         } catch (Exception e) {
+            DialogHelper.showErrorDialog("isFinished method is missing");
             e.printStackTrace();
             return false;
         }
