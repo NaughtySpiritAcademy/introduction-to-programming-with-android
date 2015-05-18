@@ -1,28 +1,23 @@
 package co.naughtyspirit.waitinginlinequeue;
 
 import java.util.ArrayDeque;
-import java.util.Queue;
 
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
  * on 5/16/15.
  */
 public class ClientDispatcher {
-    Queue<Integer> clients;
+    ArrayDeque<Integer> clients;
 
-    public Queue<Integer> createClients() {
-        clients = new ArrayDeque<>();
-        for (int i = 1; i <= 4; i++) {
-            clients.add(i);
-        }
-        return clients;
+    public ArrayDeque<Integer> createClients() {
+        return null;
     }
 
     public int getNextClient() {
-        return clients.poll();
+        return 0;
     }
 
     public boolean hasNoMoreClients() {
-        return clients.isEmpty();
+        return true;
     }
 }

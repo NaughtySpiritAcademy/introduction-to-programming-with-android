@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -32,6 +33,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         clients = new LinkedList<>();
 
         Queue<Integer> clientNumbers = clientDispatcher.createClients();
+        if (clientNumbers == null) {
+            clientDispatcher.clients = new ArrayDeque<>();
+            clientNumbers = new ArrayDeque<>();
+        }
         for (Integer clientNumber : clientNumbers) {
             Person client = new Person(clientNumber, Constants.MAX_PERSON_IN_QUEUE - clientNumber + 1);
             clients.add(client);
@@ -43,6 +48,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.next_button:
+                if (clientDispatcher.hasNoMoreClients()) {
+                    return;
+                }
                 Person nextClient = new Person(clientDispatcher.getNextClient(), Constants.CLIENT_DESK_POSITION);
                 nextClient.goToDesk();
                 clients.poll();
