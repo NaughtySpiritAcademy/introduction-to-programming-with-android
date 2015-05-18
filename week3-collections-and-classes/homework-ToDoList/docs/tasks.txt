@@ -1,0 +1,7 @@
+1. Create a TasksManager class and write " <class_name> extends BaseTaskManager"
+2. Create a Task class and write " <class_name> extends BaseTask"
+3. If you get red line below the class declaration for point 1 and 2
+    1. Just hover with the mouse over it and press the red bulb
+    2. Select the Implement methods option
+4. Make an implementation for each of the methods
+

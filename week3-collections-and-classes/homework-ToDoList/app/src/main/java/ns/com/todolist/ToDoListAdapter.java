@@ -33,7 +33,7 @@ public class ToDoListAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return tasks.size();
+        return tasks == null ? 0 : tasks.size();
     }
 
     @Override
