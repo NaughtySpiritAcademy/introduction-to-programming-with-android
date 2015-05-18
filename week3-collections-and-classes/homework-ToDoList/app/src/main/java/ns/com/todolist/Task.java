@@ -1,5 +1,7 @@
 package ns.com.todolist;
 
+import android.util.Log;
+
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
  * on 5/17/15.
@@ -25,9 +27,9 @@ public class Task{
 //        return title;
 //    }
 //
-//    @Override
 //    public void setTitle(String title) {
-//        this.title = title;
+//        Log.d("NewTitle", title);
+////        this.title = title;
 //    }
 //
 //    @Override

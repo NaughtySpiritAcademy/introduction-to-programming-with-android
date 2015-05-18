@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
     }
 
     private void showAddItemDialog() {
-        TaskDialog dialog = new TaskDialog(this, adapter, new Task());
+        TaskDialog dialog = new TaskDialog(this, adapter, TaskWrapper.wrap(new Task()));
         dialog.show();
     }
 

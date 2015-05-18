@@ -13,8 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import ns.com.todolist.base.Task;
-
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
  * on 5/16/15.
@@ -24,7 +22,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
     private EditText priorityView;
     private EditText dateView;
 
-    private Task task;
+    private TaskWrapper task;
     public boolean isEdit = false;
     public int taskIndex = 0;
 
@@ -33,7 +31,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 
-    public TaskDialog(Context context, ToDoListAdapter adapter, Task task) {
+    public TaskDialog(Context context, ToDoListAdapter adapter, TaskWrapper task) {
         super(context);
         this.adapter = adapter;
         setContentView(R.layout.task_dialog);
@@ -67,10 +65,10 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                     e.printStackTrace();
                 }
                 task.setDate(date);
-                if(!isEdit) {
-                    adapter.addItem(task);
+                if (!isEdit) {
+                    adapter.addItem(task.getTask());
                 } else {
-                    adapter.setTask(taskIndex, task);
+                    adapter.setTask(taskIndex, task.getTask());
                 }
                 dismiss();
                 break;
@@ -94,6 +92,6 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
                 dateView.setText(dateFormatter.format(newDate.getTime()));
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 }

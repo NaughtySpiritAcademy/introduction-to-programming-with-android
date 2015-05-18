@@ -12,20 +12,28 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
  * on 5/16/15.
  */
 public class ToDoListAdapter extends BaseAdapter {
-    ArrayList<Task> tasks = new ArrayList<>();
+    List<TaskWrapper> tasks = new ArrayList<>();
     Context context;
     TaskManager tasksManager;
 
-    public ToDoListAdapter(Context context, TaskManager tasksManager) {
+    public ToDoListAdapter(Context context, TaskManager taskManager) {
         this.context = context;
-        this.tasks = tasksManager.getTasks();
-        this.tasksManager = tasksManager;
+
+        List<Task> managerTasks = taskManager.getTasks();
+        if (managerTasks == null) {
+            managerTasks = new ArrayList<>();
+        }
+        for (Task task : managerTasks) {
+            tasks.add(TaskWrapper.wrap(task));
+        }
+        this.tasksManager = taskManager;
     }
 
     @Override
@@ -34,7 +42,7 @@ public class ToDoListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Task getItem(int i) {
+    public TaskWrapper getItem(int i) {
         return tasks.get(i);
     }
 
@@ -50,7 +58,7 @@ public class ToDoListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.list_item, null);
         }
 
-        final Task task = getItem(position);
+        final TaskWrapper task = getItem(position);
         if (task.isFinished()) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.task_done));
         }
@@ -89,7 +97,7 @@ public class ToDoListAdapter extends BaseAdapter {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tasksManager.markTaskAsFinished(task);
+                tasksManager.markTaskAsFinished(task.getTask());
                 notifyDataSetChanged();
             }
         });
