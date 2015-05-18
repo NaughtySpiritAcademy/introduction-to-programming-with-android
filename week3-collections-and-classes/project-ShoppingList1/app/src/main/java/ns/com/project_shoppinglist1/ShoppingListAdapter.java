@@ -23,6 +23,9 @@ public class ShoppingListAdapter extends BaseAdapter{
     public ShoppingListAdapter(Context context, ShoppingList shoppingList) {
         this.context = context;
         this.items = shoppingList.getItems();
+        if(items == null) {
+            items = new ArrayList<>();
+        }
         this.shoppingList = shoppingList;
     }
 

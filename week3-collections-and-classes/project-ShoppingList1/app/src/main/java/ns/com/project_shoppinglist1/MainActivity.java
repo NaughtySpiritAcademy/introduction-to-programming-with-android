@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 
 public class MainActivity extends Activity {
 
@@ -26,10 +24,6 @@ public class MainActivity extends Activity {
         addBtn = (Button) findViewById(R.id.add);
         shoppingList = new ShoppingList();
         shoppingList.initialize();
-        if(shoppingList.getItems() == null) {
-            shoppingList.shoppingList = new ArrayList<>();
-        }
-
         adapter = new ShoppingListAdapter(this, shoppingList);
         list.setAdapter(adapter);
 
