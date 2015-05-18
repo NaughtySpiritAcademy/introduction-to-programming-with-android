@@ -7,9 +7,10 @@ import java.util.HashMap;
  * on 5/16/15.
  */
 public class ShoppingList {
-    HashMap<String, Integer> shoppingList = new HashMap<>();
+    HashMap<String, Integer> shoppingList;
 
     public void initialize() {
+        shoppingList = new HashMap<>();
         shoppingList.put("Krushi", 3);
         shoppingList.put("Fystyci", 6);
         shoppingList.put("Semki", 2);
