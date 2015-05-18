@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import ns.com.todolist.base.BaseTask;
+import ns.com.todolist.base.Task;
 
 /**
  * Created by Naughty Spirit <hi@naughtyspirit.co>
@@ -24,7 +24,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
     private EditText priorityView;
     private EditText dateView;
 
-    private BaseTask task;
+    private Task task;
     public boolean isEdit = false;
     public int taskIndex = 0;
 
@@ -33,7 +33,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 
-    public TaskDialog(Context context, ToDoListAdapter adapter, BaseTask task) {
+    public TaskDialog(Context context, ToDoListAdapter adapter, Task task) {
         super(context);
         this.adapter = adapter;
         setContentView(R.layout.task_dialog);

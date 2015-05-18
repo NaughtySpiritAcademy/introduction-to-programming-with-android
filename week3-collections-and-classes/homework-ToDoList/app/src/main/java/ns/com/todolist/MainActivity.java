@@ -6,18 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import ns.com.todolist.base.BaseTask;
-import ns.com.todolist.base.BaseTaskManager;
-import ns.com.todolist.factories.TaskFactory;
-import ns.com.todolist.factories.TaskManagerFactory;
-
 
 public class MainActivity extends Activity {
 
     ListView list;
     Button addBtn;
 
-    BaseTaskManager tasksManager;
+    TaskManager tasksManager;
     ToDoListAdapter adapter;
 
     @Override
@@ -27,7 +22,7 @@ public class MainActivity extends Activity {
 
         list = (ListView) findViewById(R.id.list);
         addBtn = (Button) findViewById(R.id.add);
-        tasksManager = TaskManagerFactory.getTaskManager();
+        tasksManager = new TaskManager();
         tasksManager.initialize();
 
         adapter = new ToDoListAdapter(this, tasksManager);
@@ -43,7 +38,7 @@ public class MainActivity extends Activity {
     }
 
     private void showAddItemDialog() {
-        TaskDialog dialog = new TaskDialog(this, adapter, TaskFactory.getTask());
+        TaskDialog dialog = new TaskDialog(this, adapter, new Task());
         dialog.show();
     }
 
