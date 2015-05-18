@@ -7,32 +7,26 @@ import java.util.HashMap;
  * on 5/16/15.
  */
 public class ShoppingList {
-    HashMap<String, Integer> shoppingList = new HashMap<>();
+    HashMap<String, Integer> shoppingList;
 
     public void initialize() {
-        shoppingList.put("Krushi", 3);
-        shoppingList.put("Fystyci", 6);
-        shoppingList.put("Semki", 2);
+
     }
 
     public HashMap<String, Integer> getItems() {
-        return shoppingList;
+        return null;
     }
 
     public void addItem(String item, int quantity) {
-        shoppingList.put(item, quantity);
     }
 
     public void removeItem(String item) {
-        shoppingList.remove(item);
     }
 
     public int getQuantity(String item) {
-        return shoppingList.get(item);
+        return 0;
     }
 
     public void updateItem(String oldItem, String newItem, int quantity) {
-        shoppingList.remove(oldItem);
-        shoppingList.put(newItem, quantity);
     }
 }

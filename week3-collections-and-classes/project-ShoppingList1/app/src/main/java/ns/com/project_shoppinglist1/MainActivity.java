@@ -24,7 +24,6 @@ public class MainActivity extends Activity {
         addBtn = (Button) findViewById(R.id.add);
         shoppingList = new ShoppingList();
         shoppingList.initialize();
-
         adapter = new ShoppingListAdapter(this, shoppingList);
         list.setAdapter(adapter);
 

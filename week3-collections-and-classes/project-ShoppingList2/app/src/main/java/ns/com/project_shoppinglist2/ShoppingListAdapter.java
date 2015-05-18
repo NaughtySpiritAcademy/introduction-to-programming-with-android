@@ -106,6 +106,9 @@ public class ShoppingListAdapter extends BaseAdapter{
 
     private void refreshData() {
         HashMap<String, Integer> map = shoppingList.getItems();
+        if(map == null) {
+            map = new HashMap<>();
+        }
         items.clear();
         for(String key : map.keySet()) {
             items.add(new ShoppingItem(key, map.get(key)));
