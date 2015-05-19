@@ -49,7 +49,7 @@ public class TaskDialog extends Dialog implements View.OnClickListener {
 
         titleView.setText(task.getTitle());
         priorityView.setText(task.getPriority() + "");
-        dateView.setText(dateFormatter.format(task.getDate()));
+        dateView.setText(dateFormatter.format(task.getDate() != null ? task.getDate() : new Date()));
     }
 
     @Override
