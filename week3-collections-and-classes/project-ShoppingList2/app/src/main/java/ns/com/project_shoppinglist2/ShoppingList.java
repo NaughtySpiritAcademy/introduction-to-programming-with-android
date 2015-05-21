@@ -10,23 +10,28 @@ public class ShoppingList {
     HashMap<String, Integer> shoppingList;
 
     public void initialize() {
-
+        shoppingList = new HashMap<>();
+        shoppingList.put("Krushi", 2);
     }
 
     public HashMap<String, Integer> getItems() {
-        return null;
+        return shoppingList;
     }
 
     public void addItem(String item, int quantity) {
+        shoppingList.put(item, quantity);
     }
 
     public void removeItem(String item) {
+        shoppingList.remove(item);
     }
 
     public int getQuantity(String item) {
-        return 0;
+        return shoppingList.get(item);
     }
 
     public void updateItem(String oldItem, String newItem, int quantity) {
+        shoppingList.remove(oldItem);
+        shoppingList.put(newItem, quantity);
     }
 }

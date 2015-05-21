@@ -7,17 +7,24 @@ import java.util.ArrayDeque;
  * on 5/16/15.
  */
 public class ClientDispatcher {
-    ArrayDeque<Integer> clients;
+    ArrayDeque<String> clients;
 
-    public ArrayDeque<Integer> createClients() {
-        return null;
+    public ArrayDeque<String> createClients() {
+        clients = new ArrayDeque<>();
+        for(int i = 1; i <= 4; i++) {
+            clients.add("Ivancho");
+        }
+
+
+
+        return clients;
     }
 
     public int getNextClient() {
-        return 0;
+        return clients.poll();
     }
 
     public boolean hasNoMoreClients() {
-        return true;
+        return clients.isEmpty();
     }
 }

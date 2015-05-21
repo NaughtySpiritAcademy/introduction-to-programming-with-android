@@ -10,27 +10,32 @@ public class ShoppingList {
     ArrayList<String> shoppingList;
 
     public void initialize() {
-
+        shoppingList = new ArrayList<>();
+        shoppingList.add("Krushi");
+        shoppingList.add("Salfetki");
     }
 
     public ArrayList<String> getItems() {
-        return null;
+        return shoppingList;
     }
 
     public void addItem(String item) {
+        shoppingList.add(item);
     }
 
     public void addItemAtIndex(int index, String item) {
-
+        shoppingList.add(index, item);
     }
 
     public void removeItem(int index) {
+        shoppingList.remove(index);
     }
 
     public String getItem(int index) {
-        return "";
+        return shoppingList.get(index);
     }
 
     public void setItem(int index, String item) {
+        shoppingList.set(index, item);
     }
 }

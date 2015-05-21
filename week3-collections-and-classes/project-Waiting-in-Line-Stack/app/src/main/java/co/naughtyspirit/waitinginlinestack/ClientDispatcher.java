@@ -10,14 +10,19 @@ public class ClientDispatcher {
     Stack<Integer> clients;
 
     public Stack<Integer> createClients() {
-        return null;
+        clients = new Stack<>();
+        for(int i = 1; i <= 4; i++) {
+            clients.push(i);
+        }
+
+        return clients;
     }
 
     public int getNextClient() {
-        return 0;
+        return clients.pop();
     }
 
     public boolean hasNoMoreClients() {
-        return true;
+        return clients.empty();
     }
 }
