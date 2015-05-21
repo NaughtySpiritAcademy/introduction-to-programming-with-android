@@ -13,10 +13,12 @@ import co.naughtyspirit.wackyracer.Constants;
  */
 public class CarEntity extends GameEntity {
 
+    private final int topSpeed;
     private final CarCrashListener listener;
 
-    public CarEntity(Drawable image, int startColumn, CarCrashListener listener) {
+    public CarEntity(Drawable image, int startColumn, int topSpeed, CarCrashListener listener) {
         super(new Position(Constants.BOARD_ROWS - 1, startColumn), image);
+        this.topSpeed = topSpeed;
         this.listener = listener;
     }
 
@@ -40,5 +42,9 @@ public class CarEntity extends GameEntity {
         if (!Arrays.asList(Constants.ROAD_COLUMNS).contains(position.column)) {
             listener.onCarCrash();
         }
+    }
+
+    public int getTopSpeed() {
+        return topSpeed;
     }
 }

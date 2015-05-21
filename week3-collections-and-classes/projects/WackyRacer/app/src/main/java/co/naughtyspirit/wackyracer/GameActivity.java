@@ -27,6 +27,8 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
     private TextView scoreboard;
     private TextView speedGauge;
     private TrafficAllocator trafficAllocator = new TrafficAllocator(this);
+    private WackyRacer wackyRacer = new WackyRacer();
+    private int speedIncrease;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +72,47 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
 
     private void startNewGame() {
         scoreboard.setText(R.string.initial_score);
-        speedGauge.setText(getString(R.string.initial_speed));
+
         Point size = getWindowSize();
         int width = size.x;
         int height = size.y;
         board = new Board(width, height, new Board.Size(Constants.BOARD_ROWS, Constants.BOARD_COLUMNS), (CanvasView) findViewById(R.id.canvas_view));
         Random random = new Random();
-        car = new CarEntity(getResources().getDrawable(R.drawable.yellow_car), Constants.ROAD_COLUMNS[random.nextInt(Constants.ROAD_COLUMNS.length)], this);
-        board.add(car);
-        gameTimer = new GameTimer(this);
+        createCar(random);
+
+        int topSpeed = Math.min(car.getTopSpeed(), Constants.MAXIMUM_CAR_SPEED);
+        int startSpeed = topSpeed / 2;
+        speedGauge.setText(startSpeed + " km/h");
+        speedIncrease = (topSpeed - startSpeed) / Constants.LEVEL_COUNT;
+        gameTimer = new GameTimer(topSpeed, startSpeed, speedIncrease, this);
         gameTimer.start();
+    }
+
+    private void createCar(Random random) {
+        Car playerCar = wackyRacer.createCar();
+        String color = playerCar.getColor();
+
+        int carResId;
+        switch (color) {
+
+            case "blue":
+                carResId = R.drawable.blue_car;
+                break;
+
+            case "green":
+                carResId = R.drawable.green_car;
+                break;
+
+            case "yellow":
+                carResId = R.drawable.yellow_car;
+                break;
+
+            default:
+                carResId = R.drawable.red_car;
+        }
+        int startPosition = Constants.ROAD_COLUMNS[random.nextInt(Constants.ROAD_COLUMNS.length)];
+        car = new CarEntity(getResources().getDrawable(carResId), startPosition, playerCar.getTopSpeed(), this);
+        board.add(car);
     }
 
     private void onMoveTiles() {
@@ -136,10 +169,10 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
     }
 
     @Override
-    public void onChangeSpeed() {
+    public void onChangeSpeed(long currentSpeed) {
         String text = speedGauge.getText().toString();
         int speed = Integer.valueOf(text.replace("km/h", "").trim());
-        speed += 10;
+        speed += speedIncrease;
         speedGauge.setText(speed + " km/h");
     }
 

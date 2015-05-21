@@ -5,5 +5,4 @@
     <string name="left_button"><![CDATA[<]]></string>
     <string name="right_button"><![CDATA[>]]></string>
     <string name="initial_score">0</string>
-    <string name="initial_speed">140 km/h</string>
 </resources>

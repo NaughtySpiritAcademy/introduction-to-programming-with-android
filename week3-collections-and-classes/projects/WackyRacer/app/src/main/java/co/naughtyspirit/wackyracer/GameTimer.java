@@ -8,12 +8,13 @@ import android.os.Handler;
  */
 public class GameTimer {
 
+    private final int topSpeed;
+    private final int speedIncrease;
     private final GameTimerListener listener;
     private Handler moveTilesHandler = new Handler();
-    private int tickCount = Constants.FIRST_LEVEL_TICK_COUNT;
-    private int currentTicks = 0;
-    private long moveInterval = Constants.FIRST_LEVEL_MOVE_INTERVAL;
     private boolean isRunning = false;
+    private long currentSpeed = 0;
+    private int levelMoves = 0;
 
     private Runnable moveTilesRunnable = new Runnable() {
         @Override
@@ -23,29 +24,33 @@ public class GameTimer {
             }
             listener.onMove();
 
-            currentTicks++;
-            if (currentTicks >= tickCount) {
-                currentTicks = 0;
-                if (tickCount > 0) {
-                    tickCount -= 2;
-                    moveInterval -= 10;
-                    listener.onChangeSpeed();
-                }
+            int movesPerLevel = 30;
 
+            if (currentSpeed < topSpeed && currentSpeed < Constants.MAXIMUM_CAR_SPEED) {
+                levelMoves++;
+                if (levelMoves > movesPerLevel) {
+                    levelMoves = 0;
+                    currentSpeed += speedIncrease;
+                    listener.onChangeSpeed(currentSpeed);
+                }
             }
 
-            moveTilesHandler.postDelayed(this, moveInterval);
+            long delay = Constants.MAXIMUM_CAR_SPEED - currentSpeed;
+            moveTilesHandler.postDelayed(this, delay);
         }
     };
 
-    public GameTimer(GameTimerListener listener) {
+    public GameTimer(int topSpeed, long currentSpeed, int speedIncrease, GameTimerListener listener) {
+        this.topSpeed = topSpeed;
+        this.currentSpeed = currentSpeed;
+        this.speedIncrease = speedIncrease;
         this.listener = listener;
     }
 
 
     public void start() {
         isRunning = true;
-        moveTilesHandler.postDelayed(moveTilesRunnable, moveInterval);
+        moveTilesHandler.postDelayed(moveTilesRunnable, Constants.MAXIMUM_CAR_SPEED);
     }
 
     public void cancel() {

@@ -28,7 +28,22 @@
             android:singleLine="true"
             android:text="@string/initial_score"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/primary_text_dark" />
+            android:textColor="@android:color/primary_text_light"  />
+
+        <TextView
+            android:id="@+id/player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:singleLine="true"
+            android:text="@string/initial_score"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@android:color/primary_text_light"  />
 
         <TextView
             android:id="@+id/speed_gauge"
@@ -41,9 +56,8 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:singleLine="true"
-            android:text="@string/initial_speed"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/primary_text_dark" />
+            android:textColor="@android:color/primary_text_light" />
 
         <Button
             android:id="@+id/left_btn"

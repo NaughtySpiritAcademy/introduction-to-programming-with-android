@@ -43,7 +43,7 @@ public class Board implements CanvasDrawable {
         canvasView.setTileHeight(tileHeight);
         canvasView.add(this);
 
-        backgroundPaint.setColor(Color.GREEN);
+        backgroundPaint.setColor(Color.parseColor(Constants.BACKGROUND_COLOR));
         roadPaint.setColor(Color.DKGRAY);
         roadLinePaint.setColor(Color.WHITE);
         redraw();
