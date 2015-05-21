@@ -6,23 +6,18 @@ package co.naughtyspirit.wackyracer;
  */
 public class WackyRacer {
 
-    private Car car;
-
     public void createCar() {
-        car = new Car("blue", "Polisan", 300, 2);
     }
 
     public int moveLeft() {
-        car.moveLeft();
-        return car.getPosition();
+        return 0;
     }
 
     public int moveRight() {
-        car.moveRight();
-        return car.getPosition();
+        return 0;
     }
 
     public Car getCar() {
-        return car;
+        return null;
     }
 }
