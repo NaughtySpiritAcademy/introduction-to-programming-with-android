@@ -16,8 +16,6 @@ import java.util.Random;
 import co.naughtyspirit.wackyracer.entities.Board;
 import co.naughtyspirit.wackyracer.entities.CarCrashListener;
 import co.naughtyspirit.wackyracer.entities.CarEntity;
-import co.naughtyspirit.wackyracer.entities.Position;
-import co.naughtyspirit.wackyracer.entities.TrafficCarEntity;
 import co.naughtyspirit.wackyracer.ui.CanvasView;
 
 
@@ -77,12 +75,9 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
         int width = size.x;
         int height = size.y;
         board = new Board(width, height, new Board.Size(Constants.BOARD_ROWS, Constants.BOARD_COLUMNS), (CanvasView) findViewById(R.id.canvas_view));
-        car = new CarEntity(getResources().getDrawable(R.drawable.yellow_car), this);
-        board.add(car);
         Random random = new Random();
-        int trafficCarColumn = random.nextInt(2) + 3;
-        TrafficCarEntity trafficCar = new TrafficCarEntity(new Position(1, trafficCarColumn), getResources().getDrawable(R.drawable.traffic_5));
-        board.add(trafficCar);
+        car = new CarEntity(getResources().getDrawable(R.drawable.yellow_car), Constants.ROAD_COLUMNS[random.nextInt(Constants.ROAD_COLUMNS.length)], this);
+        board.add(car);
         gameTimer = new GameTimer(this);
         gameTimer.start();
     }

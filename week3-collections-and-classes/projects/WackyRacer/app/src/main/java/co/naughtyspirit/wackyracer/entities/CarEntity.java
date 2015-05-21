@@ -2,6 +2,7 @@ package co.naughtyspirit.wackyracer.entities;
 
 import android.graphics.drawable.Drawable;
 
+import java.util.Arrays;
 import java.util.List;
 
 import co.naughtyspirit.wackyracer.Constants;
@@ -14,8 +15,8 @@ public class CarEntity extends GameEntity {
 
     private final CarCrashListener listener;
 
-    public CarEntity(Drawable image, CarCrashListener listener) {
-        super(new Position(Constants.BOARD_ROWS - 1, 4), image);
+    public CarEntity(Drawable image, int startColumn, CarCrashListener listener) {
+        super(new Position(Constants.BOARD_ROWS - 1, startColumn), image);
         this.listener = listener;
     }
 
@@ -36,7 +37,7 @@ public class CarEntity extends GameEntity {
                 }
             }
         }
-        if (position.column > 4 || position.column < 3) {
+        if (!Arrays.asList(Constants.ROAD_COLUMNS).contains(position.column)) {
             listener.onCarCrash();
         }
     }

@@ -33,11 +33,11 @@ public class TrafficAllocator {
         }
 
         if (shouldCreateTraffic()) {
-            int trafficCarColumn = random.nextInt(2) + 3;
+            int trafficCarColumn = Constants.ROAD_COLUMNS[random.nextInt(Constants.ROAD_COLUMNS.length)];
             int trafficCarType = random.nextInt(Constants.TRAFFIC_CAR_TYPE_COUNT);
             String drawableName = "traffic_" + trafficCarType;
             int resId = context.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
-            TrafficCarEntity trafficCar = new TrafficCarEntity(new Position(1, trafficCarColumn), context.getResources().getDrawable(resId));
+            TrafficCarEntity trafficCar = new TrafficCarEntity(new Position(Constants.TRAFFIC_CAR_START_ROW, trafficCarColumn), context.getResources().getDrawable(resId));
             board.add(trafficCar);
         }
     }

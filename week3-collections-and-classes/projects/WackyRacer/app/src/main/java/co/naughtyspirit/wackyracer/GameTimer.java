@@ -12,7 +12,7 @@ public class GameTimer {
     private Handler moveTilesHandler = new Handler();
     private int tickCount = Constants.FIRST_LEVEL_TICK_COUNT;
     private int currentTicks = 0;
-    private long delayTime = Constants.FIRST_LEVEL_MOVE_INTERVAL;
+    private long moveInterval = Constants.FIRST_LEVEL_MOVE_INTERVAL;
     private boolean isRunning = false;
 
     private Runnable moveTilesRunnable = new Runnable() {
@@ -27,14 +27,14 @@ public class GameTimer {
             if (currentTicks >= tickCount) {
                 currentTicks = 0;
                 if (tickCount > 0) {
-                    tickCount -= 1;
-                    delayTime -= 10;
+                    tickCount -= 2;
+                    moveInterval -= 10;
                     listener.onChangeSpeed();
                 }
 
             }
 
-            moveTilesHandler.postDelayed(this, delayTime);
+            moveTilesHandler.postDelayed(this, moveInterval);
         }
     };
 
@@ -45,7 +45,7 @@ public class GameTimer {
 
     public void start() {
         isRunning = true;
-        moveTilesHandler.postDelayed(moveTilesRunnable, delayTime);
+        moveTilesHandler.postDelayed(moveTilesRunnable, moveInterval);
     }
 
     public void cancel() {

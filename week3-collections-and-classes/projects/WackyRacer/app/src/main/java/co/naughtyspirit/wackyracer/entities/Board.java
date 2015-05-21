@@ -59,8 +59,10 @@ public class Board implements CanvasDrawable {
         }
 
         for (int row = 0; row < size.rows; row++) {
-            canvas.drawRect(2 * tileWidth, row * tileHeight, 2 * tileWidth + tileWidth, row * tileHeight + tileHeight, roadPaint);
-            canvas.drawRect(3 * tileWidth, row * tileHeight, 3 * tileWidth + tileWidth, row * tileHeight + tileHeight, roadPaint);
+            for (int roadColumn : Constants.ROAD_COLUMNS) {
+                roadColumn -= 1;
+                canvas.drawRect(roadColumn * tileWidth, row * tileHeight, roadColumn * tileWidth + tileWidth, row * tileHeight + tileHeight, roadPaint);
+            }
         }
 
         float roadLineHeight = height / 10;
