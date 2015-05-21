@@ -137,7 +137,6 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
         scoreboard.setText(score + "");
     }
 
-
     @Override
     public void onClick(View v) {
         int firstRoadColumn = Constants.ROAD_COLUMNS[0];

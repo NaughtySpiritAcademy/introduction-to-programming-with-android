@@ -43,6 +43,6 @@ public class TrafficAllocator {
     }
 
     private boolean shouldCreateTraffic() {
-        return random.nextInt(6) == 0;
+        return random.nextInt(7) == 0;
     }
 }
