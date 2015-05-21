@@ -22,14 +22,6 @@ public class CarEntity extends GameEntity {
         this.listener = listener;
     }
 
-    public void moveLeft() {
-        position = new Position(position.row, position.column - 1);
-    }
-
-    public void moveRight() {
-        position = new Position(position.row, position.column + 1);
-    }
-
     public void checkForCollisions(List<GameEntity> gameEntities) {
         for (GameEntity entity : gameEntities) {
             if (entity instanceof TrafficCarEntity) {
@@ -46,5 +38,9 @@ public class CarEntity extends GameEntity {
 
     public int getTopSpeed() {
         return topSpeed;
+    }
+
+    public void changePosition(int newColumn) {
+        position = new Position(position.row, newColumn);
     }
 }

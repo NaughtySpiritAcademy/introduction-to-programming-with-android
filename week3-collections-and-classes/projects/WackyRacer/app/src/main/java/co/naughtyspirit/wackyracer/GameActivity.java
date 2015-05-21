@@ -26,6 +26,7 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
     private GameTimer gameTimer;
     private TextView scoreboard;
     private TextView speedGauge;
+    private TextView player;
     private TrafficAllocator trafficAllocator = new TrafficAllocator(this);
     private WackyRacer wackyRacer = new WackyRacer();
     private int speedIncrease;
@@ -38,6 +39,7 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
         findViewById(R.id.right_btn).setOnClickListener(this);
         scoreboard = (TextView) findViewById(R.id.scoreboard);
         speedGauge = (TextView) findViewById(R.id.speed_gauge);
+        player = (TextView) findViewById(R.id.player);
         startNewGame();
     }
 
@@ -71,8 +73,8 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
     }
 
     private void startNewGame() {
+        findViewById(R.id.gui_layout).setVisibility(View.VISIBLE);
         scoreboard.setText(R.string.initial_score);
-
         Point size = getWindowSize();
         int width = size.x;
         int height = size.y;
@@ -89,7 +91,8 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
     }
 
     private void createCar(Random random) {
-        Car playerCar = wackyRacer.createCar();
+        wackyRacer.createCar();
+        Car playerCar = wackyRacer.getCar();
         String color = playerCar.getColor();
 
         int carResId;
@@ -110,7 +113,12 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
             default:
                 carResId = R.drawable.red_car;
         }
+        player.setText(playerCar.getDriver());
         int startPosition = Constants.ROAD_COLUMNS[random.nextInt(Constants.ROAD_COLUMNS.length)];
+        int playerStartPosition = playerCar.getPosition();
+        if (playerStartPosition >= 1 && playerStartPosition <= 2) {
+            startPosition = Constants.ROAD_COLUMNS[playerStartPosition - 1];
+        }
         car = new CarEntity(getResources().getDrawable(carResId), startPosition, playerCar.getTopSpeed(), this);
         board.add(car);
     }
@@ -132,14 +140,15 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
 
     @Override
     public void onClick(View v) {
+        int firstRoadColumn = Constants.ROAD_COLUMNS[0];
         switch (v.getId()) {
             case R.id.left_btn:
-                car.moveLeft();
+                car.changePosition(firstRoadColumn + wackyRacer.moveLeft() - 1);
                 board.checkForCollisions(car);
                 break;
 
             case R.id.right_btn:
-                car.moveRight();
+                car.changePosition(firstRoadColumn + wackyRacer.moveRight() - 1);
                 board.checkForCollisions(car);
                 break;
         }
@@ -148,6 +157,7 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
 
     @Override
     public void onCarCrash() {
+        findViewById(R.id.gui_layout).setVisibility(View.GONE);
         board.onGameOver();
         gameTimer.cancel();
         showDialogGameOverDialog(R.string.crash_dialog_title, String.format(getString(R.string.crash_dialog_message), scoreboard.getText().toString()), new DialogInterface.OnClickListener() {

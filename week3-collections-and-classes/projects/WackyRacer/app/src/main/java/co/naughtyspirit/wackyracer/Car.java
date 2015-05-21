@@ -9,8 +9,6 @@ public class Car {
     private String color;
     private String driver;
     private int topSpeed;
-
-
     private int position;
 
     public Car(String color, String driver, int topSpeed, int position) {
@@ -24,7 +22,6 @@ public class Car {
         return position;
     }
 
-
     public String getColor() {
         return color;
     }
@@ -35,5 +32,13 @@ public class Car {
 
     public int getTopSpeed() {
         return topSpeed;
+    }
+
+    public void moveLeft() {
+        position -= 1;
+    }
+
+    public void moveRight() {
+        position += 1;
     }
 }
