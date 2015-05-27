@@ -75,6 +75,6 @@ public class DrawerActivity extends Activity implements OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ShapeManager.resetSelected();
+        ShapeManager.resetSelectedShapes();
     }
 }

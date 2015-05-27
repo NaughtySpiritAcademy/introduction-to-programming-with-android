@@ -14,6 +14,5 @@ public class MyShape extends Shape{
         int centerX = width / 2;
         int centerY = height / 2;
         canvas.drawRect(centerX, centerY, centerX + 200, centerY + 200, paint);
-        super.draw(canvas);
     }
 }

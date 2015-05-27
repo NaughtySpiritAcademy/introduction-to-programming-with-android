@@ -42,6 +42,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
         ivMyShape.setOnClickListener(this);
         btnPreview.setOnClickListener(this);
         dialog = new PositionDialog(this);
+        ShapeManager.initialize();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
         super.onResume();
         dialog.setOnPositionSelectedListener(this);
 
-        ShapeManager.resetSelected();
+        ShapeManager.resetSelectedShapes();
         shapesListView.setShapes(ShapeManager.getShapes());
     }
 
