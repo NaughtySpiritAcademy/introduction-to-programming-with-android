@@ -15,8 +15,8 @@ public class Triangle extends Shape {
 
     private Path path;
 
-    public Triangle(Context context) {
-        super(context);
+    public Triangle(Context context, String name) {
+        super(context, name);
 
         path = new Path();
         paint.setStyle(Paint.Style.FILL);

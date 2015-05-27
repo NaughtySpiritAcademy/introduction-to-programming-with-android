@@ -5,18 +5,22 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.naughtyspirit.shapedrawer.shapes.MyShape;
 import co.naughtyspirit.shapedrawer.shapes.Oval;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
 import co.naughtyspirit.shapedrawer.shapes.Triangle;
 
 public class ShapeManager {
     static List<Shape> shapes = new ArrayList<Shape>();
+
     public static void addShape(Context context, String shapeName, int position) {
         Shape shape;
         if(shapeName.equals("Triangle")) {
-            shape = new Triangle(context);
+            shape = new Triangle(context, "Triangle");
+        } else if(shapeName.equals("Oval")){
+            shape = new Oval(context, "Oval");
         } else {
-            shape = new Oval(context);
+            shape = new MyShape(context, "MyShape2");
         }
 
         if(position == -1) {

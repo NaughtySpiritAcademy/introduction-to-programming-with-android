@@ -3,8 +3,6 @@ package co.naughtyspirit.shapedrawer.shapes;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import co.naughtyspirit.shapedrawer.ShapeManager;
-
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
  * * on 5/17/15.
@@ -13,8 +11,8 @@ import co.naughtyspirit.shapedrawer.ShapeManager;
  */
 public class Oval extends Shape {
 
-    public Oval(Context context) {
-        super(context);
+    public Oval(Context context, String name) {
+        super(context, name);
     }
 
     @Override

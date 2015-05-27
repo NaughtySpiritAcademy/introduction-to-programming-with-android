@@ -1,6 +1,7 @@
 package co.naughtyspirit.shapedrawer.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import co.naughtyspirit.shapedrawer.R;
@@ -42,10 +43,12 @@ public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder viewHolder, final int i) {
         Shape shape = shapes.get(i);
         viewHolder.ivShape.setOnClickListener(null);
-        if(shape.getClass().getSimpleName().toLowerCase().contains("triangle")) {
+        if(shape.getTitle().toLowerCase().contains("triangle")) {
             viewHolder.ivShape.setImageResource(R.drawable.ic_triangle);
-        } else {
+        } else if(shape.getTitle().toLowerCase().contains("oval")){
             viewHolder.ivShape.setImageResource(R.drawable.ic_circle);
+        } else {
+            viewHolder.ivShape.setImageResource(R.drawable.ic_my_shape);
         }
 
         if(shape.isSelected()) {

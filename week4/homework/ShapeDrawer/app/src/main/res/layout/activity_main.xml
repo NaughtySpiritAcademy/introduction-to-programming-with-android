@@ -40,7 +40,7 @@
 
     <LinearLayout
         android:id="@+id/ll_box_shapes"
-        android:weightSum="2"
+        android:weightSum="3"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -51,10 +51,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_circle"/>
+
         <ImageView
             android:id="@+id/iv_triangle"
             android:layout_weight="1"
             android:src="@drawable/ic_triangle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/iv_my_shape"
+            android:layout_weight="1"
+            android:src="@drawable/ic_my_shape"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>

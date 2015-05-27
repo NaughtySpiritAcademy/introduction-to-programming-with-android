@@ -2,12 +2,9 @@ package co.naughtyspirit.shapedrawer;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Surface;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import co.naughtyspirit.shapedrawer.views.ShapesListView;
@@ -25,6 +22,7 @@ public class DrawerActivity extends Activity implements OnClickListener {
     private Button nextShape;
     private Button previousShape;
     private TextView tvShapeIndex;
+    private TextView tvShapeName;
     private ShapesListView lvShapes;
 
     @Override
@@ -40,6 +38,7 @@ public class DrawerActivity extends Activity implements OnClickListener {
         lvShapes.setShapes(ShapeManager.getShapes());
 
         tvShapeIndex = (TextView) findViewById(R.id.tv_shape_index);
+        tvShapeName = (TextView) findViewById(R.id.tv_shape_name);
 
         surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
         nextShape = (Button) findViewById(R.id.next);
@@ -51,6 +50,7 @@ public class DrawerActivity extends Activity implements OnClickListener {
         previousShape.setOnClickListener(this);
 
         lvShapes.selectShape(0);
+        tvShapeName.setText("" + ShapeManager.getShapes().get(0).getTitle());
     }
 
     @Override
@@ -69,6 +69,7 @@ public class DrawerActivity extends Activity implements OnClickListener {
 
         lvShapes.selectShape(surfaceView.getSelectedIndex());
         tvShapeIndex.setText("" + surfaceView.getSelectedIndex());
+        tvShapeName.setText("" + ShapeManager.getShapes().get(surfaceView.getSelectedIndex()).getTitle());
     }
 
     @Override

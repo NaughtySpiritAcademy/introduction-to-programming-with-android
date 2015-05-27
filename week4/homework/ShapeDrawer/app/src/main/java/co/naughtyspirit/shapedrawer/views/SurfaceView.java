@@ -46,6 +46,8 @@ public class SurfaceView extends android.view.SurfaceView {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if(shapes.size() == 0)
+            return;
         shapes.get(currentIdx).draw(canvas);
     }
 

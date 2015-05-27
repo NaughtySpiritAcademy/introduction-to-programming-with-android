@@ -13,16 +13,17 @@ import android.view.WindowManager;
  * *
  * * NaughtySpirit 2015
  */
-public class Shape extends View {
+public abstract class Shape extends View {
     private boolean isSelected;
+    private String title;
     protected Paint paint;
     protected WindowManager wm;
     protected int width;
     protected int height;
 
-    public Shape(Context context) {
+    public Shape(Context context, String title) {
         super(context);
-
+        this.title = title;
         paint = new Paint();
         paint.setColor(Color.BLACK);
 
@@ -41,5 +42,13 @@ public class Shape extends View {
 
     public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -12,9 +12,6 @@ import android.widget.Toast;
 
 import co.naughtyspirit.shapedrawer.dialogs.PositionDialog;
 import co.naughtyspirit.shapedrawer.dialogs.PositionDialog.OnPositionSelectedListener;
-import co.naughtyspirit.shapedrawer.shapes.Oval;
-import co.naughtyspirit.shapedrawer.shapes.Shape;
-import co.naughtyspirit.shapedrawer.shapes.Triangle;
 import co.naughtyspirit.shapedrawer.views.ShapesListView;
 
 
@@ -23,6 +20,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
     Button btnPreview;
     ImageView ivCircle;
     ImageView ivTriangle;
+    ImageView ivMyShape;
     ShapesListView shapesListView;
 
     String shapeToAdd;
@@ -35,11 +33,13 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
 
         ivCircle = (ImageView) findViewById(R.id.iv_circle);
         ivTriangle = (ImageView) findViewById(R.id.iv_triangle);
+        ivMyShape = (ImageView) findViewById(R.id.iv_my_shape);
         btnPreview = (Button) findViewById(R.id.preview);
         shapesListView = (ShapesListView) findViewById(R.id.lv_shapes);
 
         ivCircle.setOnClickListener(this);
         ivTriangle.setOnClickListener(this);
+        ivMyShape.setOnClickListener(this);
         btnPreview.setOnClickListener(this);
         dialog = new PositionDialog(this);
     }
@@ -83,17 +83,19 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
 
     @Override
     public void onClick(View view) {
-        boolean shouldDisplayDialog = false;
+        boolean shouldDisplayDialog = true;
         switch (view.getId()) {
             case R.id.iv_circle:
                 shapeToAdd = "Oval";
-                shouldDisplayDialog = true;
                 break;
             case R.id.iv_triangle:
                 shapeToAdd = "Triangle";
-                shouldDisplayDialog = true;
+                break;
+            case R.id.iv_my_shape:
+                shapeToAdd = "MyShape";
                 break;
             case R.id.preview:
+                shouldDisplayDialog = false;
                 if(ShapeManager.getShapes() == null || ShapeManager.getShapes().size() <= 0) {
                     Toast.makeText(this, "Add some shapes!", Toast.LENGTH_LONG).show();
                     return;
@@ -105,7 +107,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
                 shouldDisplayDialog = false;
         }
 
-        if(shouldDisplayDialog == true) {
+        if(shouldDisplayDialog) {
             dialog.show();
         }
     }
