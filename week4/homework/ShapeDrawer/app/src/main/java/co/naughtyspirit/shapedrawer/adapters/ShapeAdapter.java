@@ -1,7 +1,10 @@
 package co.naughtyspirit.shapedrawer.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +49,8 @@ public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
         } else if(shape.getTitle().toLowerCase().contains("oval")){
             viewHolder.ivShape.setImageResource(R.drawable.ic_circle);
         } else {
-            viewHolder.ivShape.setImageResource(R.drawable.ic_my_shape);
+
+            viewHolder.ivShape.setImageBitmap(getBitmapFromView(shape));
         }
 
         if(shape.isSelected()) {
@@ -79,6 +83,25 @@ public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
             ivShape = (ImageView) itemView.findViewById(R.id.iv_shape);
             tvIndex = (TextView) itemView.findViewById(R.id.tv_index);
         }
+    }
+
+    public Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.RGB_565);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable!=null)
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        else
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.BLACK);
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
     }
 
 }
