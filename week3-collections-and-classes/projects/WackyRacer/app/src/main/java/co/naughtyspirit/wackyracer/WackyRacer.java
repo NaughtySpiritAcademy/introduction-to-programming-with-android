@@ -6,18 +6,32 @@ package co.naughtyspirit.wackyracer;
  */
 public class WackyRacer {
 
-    public void createCar() {
+    private Car car;
+
+    public void createCar(String playerName) {
+        Driver driver = new Driver(playerName);
+        car = new Car("yellow", driver, 400, 1);
     }
 
     public int moveLeft() {
-        return 0;
+        car.moveLeft();
+        return car.getPosition();
     }
 
     public int moveRight() {
-        return 0;
+        car.moveRight();
+        return car.getPosition();
+    }
+
+    public void setPoints(int points) {
+        car.getDriver().setPoints(points);
+    }
+
+    public int getNumberOfPlayers() {
+        return Driver.getNumOfDrivers();
     }
 
     public Car getCar() {
-        return null;
+        return car;
     }
 }

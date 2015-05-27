@@ -3,6 +3,7 @@ package co.naughtyspirit.wackyracer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,11 +31,12 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
     private TrafficAllocator trafficAllocator = new TrafficAllocator(this);
     private WackyRacer wackyRacer = new WackyRacer();
     private int speedIncrease;
+    private Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
         findViewById(R.id.left_btn).setOnClickListener(this);
         findViewById(R.id.right_btn).setOnClickListener(this);
         scoreboard = (TextView) findViewById(R.id.scoreboard);
@@ -79,8 +81,8 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
         int width = size.x;
         int height = size.y;
         board = new Board(width, height, new Board.Size(Constants.BOARD_ROWS, Constants.BOARD_COLUMNS), (CanvasView) findViewById(R.id.canvas_view));
-        Random random = new Random();
-        createCar(random);
+
+        createCar();
 
         int topSpeed = Math.min(car.getTopSpeed(), Constants.MAXIMUM_CAR_SPEED);
         int startSpeed = topSpeed / 2;
@@ -90,8 +92,9 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
         gameTimer.start();
     }
 
-    private void createCar(Random random) {
-        wackyRacer.createCar();
+    private void createCar() {
+        String playerName = getIntent().getStringExtra(Constants.PLAYER_NAME_EXTRA);
+        wackyRacer.createCar(playerName);
         Car playerCar = wackyRacer.getCar();
         String color = playerCar.getColor();
 
@@ -113,7 +116,7 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
             default:
                 carResId = R.drawable.red_car;
         }
-        player.setText(playerCar.getDriver());
+        player.setText(playerCar.getDriver().getName());
         int startPosition = Constants.ROAD_COLUMNS[random.nextInt(Constants.ROAD_COLUMNS.length)];
         int playerStartPosition = playerCar.getPosition();
         if (playerStartPosition >= 1 && playerStartPosition <= 2) {
@@ -159,10 +162,15 @@ public class GameActivity extends Activity implements View.OnClickListener, CarC
         findViewById(R.id.gui_layout).setVisibility(View.GONE);
         board.onGameOver();
         gameTimer.cancel();
-        showDialogGameOverDialog(R.string.crash_dialog_title, String.format(getString(R.string.crash_dialog_message), scoreboard.getText().toString()), new DialogInterface.OnClickListener() {
+        int points = Integer.valueOf(scoreboard.getText().toString());
+        wackyRacer.setPoints(points);
+        showDialogGameOverDialog(R.string.crash_dialog_title, String.format(getString(R.string.crash_dialog_message), points), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                startNewGame();
+                ((WackyRacerApp) getApplication()).addCar(wackyRacer.getCar());
+                Intent intent = new Intent(GameActivity.this, LeaderboardActivity.class);
+                intent.putExtra(Constants.NUMBER_OF_PLAYERS_EXTRA, wackyRacer.getNumberOfPlayers());
+                startActivity(intent);
             }
         });
     }
