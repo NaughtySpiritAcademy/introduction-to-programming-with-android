@@ -15,4 +15,6 @@ public interface Constants {
     int TRAFFIC_CAR_START_ROW = 1;
     int MAXIMUM_CAR_SPEED = 400;
     String BACKGROUND_COLOR = "#4CAF50";
+    String PLAYER_NAME_EXTRA = "player_name";
+    String NUMBER_OF_PLAYERS_EXTRA = "number_of_players";
 }

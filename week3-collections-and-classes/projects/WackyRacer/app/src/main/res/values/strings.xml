@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Wacky Racer</string>
     <string name="crash_dialog_title">Epic fail</string>
-    <string name="crash_dialog_message">Be more careful on the road! \nYour score is %s points.</string>
+    <string name="crash_dialog_message">Be more careful on the road! \nYour score is %d points.</string>
     <string name="left_button"><![CDATA[<]]></string>
     <string name="right_button"><![CDATA[>]]></string>
     <string name="initial_score">0</string>
+
+    <string name="enter_player_hint">Enter player name</string>
+    <string name="race_button">RACE</string>
+    <string name="player_name_validation_text">Player name is required</string>
+    <string name="number_of_players">%d player(s) total</string>
+    <string name="new_game_text">NEW GAME</string>
 </resources>
