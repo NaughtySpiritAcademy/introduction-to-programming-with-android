@@ -78,20 +78,20 @@ public class GameActivity extends ImmersiveActivity implements View.OnClickListe
         String playerName = getIntent().getStringExtra(Constants.PLAYER_NAME_EXTRA);
         wackyRacer.createCar(playerName);
         Car playerCar = wackyRacer.getCar();
-        String color = playerCar.getColor();
+        CarColor color = playerCar.getColor();
 
         int carResId;
         switch (color) {
 
-            case "blue":
+            case Blue:
                 carResId = R.drawable.blue_car;
                 break;
 
-            case "green":
+            case Green:
                 carResId = R.drawable.green_car;
                 break;
 
-            case "yellow":
+            case Yellow:
                 carResId = R.drawable.yellow_car;
                 break;
 

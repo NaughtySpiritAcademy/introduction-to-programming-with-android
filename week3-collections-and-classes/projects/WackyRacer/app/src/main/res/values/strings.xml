@@ -5,14 +5,10 @@
     <string name="left_button"><![CDATA[<]]></string>
     <string name="right_button"><![CDATA[>]]></string>
     <string name="initial_score">0</string>
-    <string name="title_activity_register_driver">RegisterDriverActivity</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="enter_player_hint">Enter player name</string>
     <string name="race_button">RACE</string>
     <string name="player_name_validation_text">Player name is required</string>
-    <string name="title_activity_leaderboard">LeaderboardActivity</string>
     <string name="number_of_players">%d player(s) total</string>
     <string name="new_game_text">NEW GAME</string>
 </resources>

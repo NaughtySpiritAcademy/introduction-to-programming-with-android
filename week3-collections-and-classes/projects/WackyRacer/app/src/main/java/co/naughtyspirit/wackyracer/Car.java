@@ -5,12 +5,12 @@ package co.naughtyspirit.wackyracer;
  * on 5/24/15.
  */
 public class Car {
-    private String color;
+    private CarColor color;
     private Driver driver;
     private int topSpeed;
     private int position;
 
-    public Car(String color, Driver driver, int topSpeed, int position) {
+    public Car(CarColor color, Driver driver, int topSpeed, int position) {
         this.color = color;
         this.driver = driver;
         this.topSpeed = topSpeed;
@@ -21,7 +21,7 @@ public class Car {
         return position;
     }
 
-    public String getColor() {
+    public CarColor getColor() {
         return color;
     }
 

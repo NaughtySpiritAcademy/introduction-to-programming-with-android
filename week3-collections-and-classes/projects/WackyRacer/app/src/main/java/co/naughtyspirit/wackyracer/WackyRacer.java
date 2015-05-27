@@ -10,7 +10,7 @@ public class WackyRacer {
 
     public void createCar(String playerName) {
         Driver driver = new Driver(playerName);
-        car = new Car("yellow", driver, 400, 1);
+        car = new Car(CarColor.Blue, driver, 400, 1);
     }
 
     public int moveLeft() {
