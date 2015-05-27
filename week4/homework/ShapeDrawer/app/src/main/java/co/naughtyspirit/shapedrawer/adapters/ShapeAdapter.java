@@ -1,7 +1,6 @@
 package co.naughtyspirit.shapedrawer.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,12 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import co.naughtyspirit.shapedrawer.R;
-import co.naughtyspirit.shapedrawer.ShapeManager;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
+import co.naughtyspirit.shapedrawer.wrappers.ShapeManagerWrapper;
 
 
 public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
@@ -28,7 +26,7 @@ public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
     }
 
     public void updateShapes() {
-        shapes = ShapeManager.getShapes();
+        shapes = ShapeManagerWrapper.getInstance().getShapes();
         notifyDataSetChanged();
     }
 
@@ -60,7 +58,7 @@ public class ShapeAdapter extends RecyclerView.Adapter<ShapeAdapter.ViewHolder>{
         viewHolder.ivShape.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShapeManager.removeShape(i);
+                ShapeManagerWrapper.getInstance().removeShape(i);
                 updateShapes();
             }
         });

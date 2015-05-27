@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import co.naughtyspirit.shapedrawer.views.ShapesListView;
 import co.naughtyspirit.shapedrawer.views.SurfaceView;
+import co.naughtyspirit.shapedrawer.wrappers.ShapeManagerWrapper;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -35,7 +36,7 @@ public class DrawerActivity extends Activity implements OnClickListener {
 
     private void initUI() {
         lvShapes = (ShapesListView) findViewById(R.id.lv_shapes);
-        lvShapes.setShapes(ShapeManager.getShapes());
+        lvShapes.setShapes(ShapeManagerWrapper.getInstance().getShapes());
 
         tvShapeIndex = (TextView) findViewById(R.id.tv_shape_index);
         tvShapeName = (TextView) findViewById(R.id.tv_shape_name);
@@ -50,7 +51,7 @@ public class DrawerActivity extends Activity implements OnClickListener {
         previousShape.setOnClickListener(this);
 
         lvShapes.selectShape(0);
-        tvShapeName.setText("" + ShapeManager.getShapes().get(0).getTitle());
+        tvShapeName.setText("" + ShapeManagerWrapper.getInstance().getShapes().get(0).getTitle());
     }
 
     @Override
@@ -69,12 +70,12 @@ public class DrawerActivity extends Activity implements OnClickListener {
 
         lvShapes.selectShape(surfaceView.getSelectedIndex());
         tvShapeIndex.setText("" + surfaceView.getSelectedIndex());
-        tvShapeName.setText("" + ShapeManager.getShapes().get(surfaceView.getSelectedIndex()).getTitle());
+        tvShapeName.setText("" + ShapeManagerWrapper.getInstance().getShapes().get(surfaceView.getSelectedIndex()).getTitle());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ShapeManager.resetSelectedShapes();
+        ShapeManagerWrapper.getInstance().resetSelectedShapes();
     }
 }

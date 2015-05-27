@@ -11,13 +11,13 @@ import co.naughtyspirit.shapedrawer.shapes.Shape;
 import co.naughtyspirit.shapedrawer.shapes.Triangle;
 
 public class ShapeManager {
-    static List<Shape> shapes;
+    List<Shape> shapes;
 
-    public static void initialize() {
+    public void initialize() {
         shapes = new ArrayList<Shape>();
     }
 
-    public static void addShape(Context context, String shapeName, int position) {
+    public void addShape(Context context, String shapeName, int position) {
         Shape shape;
         if(shapeName.equals("Triangle")) {
             shape = new Triangle(context, "Triangle");
@@ -34,7 +34,7 @@ public class ShapeManager {
         }
     }
 
-    public static void removeShape(int index) {
+    public void removeShape(int index) {
         for(int i=0;i< shapes.size();i++) {
             if(i == index) {
                 shapes.remove(i);
@@ -43,7 +43,7 @@ public class ShapeManager {
         }
     }
 
-    public static void markAsSelected(int index) {
+    public void markAsSelected(int index) {
         for (int i = 0; i < shapes.size(); i++) {
             if(i == index) {
                 shapes.get(i).setIsSelected(true);
@@ -53,13 +53,13 @@ public class ShapeManager {
         }
     }
 
-    public static void resetSelectedShapes() {
+    public void resetSelectedShapes() {
         for (int i = 0; i < shapes.size(); i++) {
             shapes.get(i).setIsSelected(false);
         }
     }
 
-    public static List<Shape> getShapes() {
+    public List<Shape> getShapes() {
         return shapes;
     }
 }

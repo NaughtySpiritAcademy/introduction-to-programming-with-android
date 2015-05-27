@@ -12,9 +12,9 @@ import android.widget.RelativeLayout;
 import java.util.List;
 
 import co.naughtyspirit.shapedrawer.R;
-import co.naughtyspirit.shapedrawer.ShapeManager;
 import co.naughtyspirit.shapedrawer.adapters.ShapeAdapter;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
+import co.naughtyspirit.shapedrawer.wrappers.ShapeManagerWrapper;
 
 public class ShapesListView extends RelativeLayout {
 
@@ -49,7 +49,7 @@ public class ShapesListView extends RelativeLayout {
     }
 
     public void selectShape(int index) {
-        ShapeManager.markAsSelected(index);
+        ShapeManagerWrapper.getInstance().markAsSelected(index);
         resetAdapter();
     }
 

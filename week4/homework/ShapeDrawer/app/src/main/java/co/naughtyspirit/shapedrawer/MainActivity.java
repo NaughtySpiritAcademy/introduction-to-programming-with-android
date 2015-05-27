@@ -13,6 +13,7 @@ import android.widget.Toast;
 import co.naughtyspirit.shapedrawer.dialogs.PositionDialog;
 import co.naughtyspirit.shapedrawer.dialogs.PositionDialog.OnPositionSelectedListener;
 import co.naughtyspirit.shapedrawer.views.ShapesListView;
+import co.naughtyspirit.shapedrawer.wrappers.ShapeManagerWrapper;
 
 
 public class MainActivity extends Activity implements View.OnClickListener, OnPositionSelectedListener {
@@ -42,7 +43,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
         ivMyShape.setOnClickListener(this);
         btnPreview.setOnClickListener(this);
         dialog = new PositionDialog(this);
-        ShapeManager.initialize();
+        ShapeManagerWrapper.getInstance().initialize();
     }
 
     @Override
@@ -50,8 +51,8 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
         super.onResume();
         dialog.setOnPositionSelectedListener(this);
 
-        ShapeManager.resetSelectedShapes();
-        shapesListView.setShapes(ShapeManager.getShapes());
+        ShapeManagerWrapper.getInstance().resetSelectedShapes();
+        shapesListView.setShapes(ShapeManagerWrapper.getInstance().getShapes());
     }
 
     @Override
@@ -97,7 +98,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
                 break;
             case R.id.preview:
                 shouldDisplayDialog = false;
-                if(ShapeManager.getShapes() == null || ShapeManager.getShapes().size() <= 0) {
+                if(ShapeManagerWrapper.getInstance().getShapes() == null || ShapeManagerWrapper.getInstance().getShapes().size() <= 0) {
                     Toast.makeText(this, "Add some shapes!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -115,7 +116,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnPo
 
     @Override
     public void onPositionSelected(int position) {
-        ShapeManager.addShape(this, shapeToAdd, position);
-        shapesListView.setShapes(ShapeManager.getShapes());
+        ShapeManagerWrapper.getInstance().addShape(this, shapeToAdd, position);
+        shapesListView.setShapes(ShapeManagerWrapper.getInstance().getShapes());
     }
 }

@@ -8,8 +8,8 @@ import android.util.AttributeSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.naughtyspirit.shapedrawer.ShapeManager;
 import co.naughtyspirit.shapedrawer.shapes.Shape;
+import co.naughtyspirit.shapedrawer.wrappers.ShapeManagerWrapper;
 
 /**
  * * Created by Seishin <atanas@naughtyspirit.co>
@@ -27,21 +27,21 @@ public class SurfaceView extends android.view.SurfaceView {
 
         setBackgroundColor(Color.WHITE);
 
-        shapes = ShapeManager.getShapes();
+        shapes = ShapeManagerWrapper.getInstance().getShapes();
     }
 
     public SurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setBackgroundColor(Color.WHITE);
 
-        shapes = ShapeManager.getShapes();
+        shapes = ShapeManagerWrapper.getInstance().getShapes();
     }
 
     public SurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setBackgroundColor(Color.WHITE);
 
-        shapes = ShapeManager.getShapes();
+        shapes = ShapeManagerWrapper.getInstance().getShapes();
     }
 
     @Override
