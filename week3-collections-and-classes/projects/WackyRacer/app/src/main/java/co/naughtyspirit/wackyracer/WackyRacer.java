@@ -9,8 +9,7 @@ public class WackyRacer {
     private Car car;
 
     public void createCar(String playerName) {
-        Driver driver = new Driver(playerName);
-        car = new Car(CarColor.Blue, driver, 400, 1);
+        car = new Car("blue", playerName, 400, 1);
     }
 
     public int moveLeft() {
@@ -24,11 +23,11 @@ public class WackyRacer {
     }
 
     public void setPoints(int points) {
-        car.getDriver().setPoints(points);
+
     }
 
     public int getNumberOfPlayers() {
-        return Driver.getNumOfDrivers();
+        return 0;
     }
 
     public Car getCar() {
