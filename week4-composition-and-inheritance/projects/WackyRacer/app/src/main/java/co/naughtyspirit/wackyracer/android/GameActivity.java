@@ -131,7 +131,7 @@ public class GameActivity extends ImmersiveActivity implements View.OnClickListe
         int score = Integer.valueOf(scoreboard.getText().toString());
         String speedText = speedGauge.getText().toString();
         int speed = Integer.valueOf(speedText.replace("km/h", "").trim());
-        score += speed / 20;
+        score += speed / 5;
         scoreboard.setText(score + "");
     }
 
