@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Sunny</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="location">Enter your location</string>
+    <string name="title_activity_weather_details">Weather Details</string>
+    <string name="today_temperature">Temperature for today is</string>
+</resources>
