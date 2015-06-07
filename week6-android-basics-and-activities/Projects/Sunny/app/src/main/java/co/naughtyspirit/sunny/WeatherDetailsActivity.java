@@ -124,6 +124,10 @@ public class WeatherDetailsActivity extends AppCompatActivity {
         return list.size() > 0;
     }
 
+    private boolean isAvailable(Intent intent) {
+        return intent.resolveActivity(getPackageManager()) != null;
+    }
+
     private void pickContact() {
         Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
         pickContactIntent.setType(Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
